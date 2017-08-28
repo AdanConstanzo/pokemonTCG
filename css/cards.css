@@ -1,0 +1,58 @@
+ul {
+	 list-style-type: none;
+}
+
+.cardsView
+{
+    display: inline-block;
+    width: 10vw;
+    margin: 10px;
+}
+
+.energyType
+{
+	width: 8%;
+	display: inline-block;
+	float: left;
+}
+.typePokemon
+{
+	width: 25px;
+	margin: 0 50px 0 0;
+	display: inline-block;
+}
+.lineText
+{
+	float: right;
+	margin: 0 25px 0 0;
+}
+
+.nameText
+{
+	float: left;
+	margin-top: 20px;
+}
+.right
+{
+	float: right;
+}
+.h3name
+{
+	margin: 0 0 0 60px;
+}
+
+.subType p
+{
+	float: left;
+
+}
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+#dropBar
+{
+	margin-top: 8px;
+}

@@ -1,0 +1,261 @@
+<!--This is our HTML component for the deck builder page -->
+
+<!-- Filter Modal -->
+<div class="modal fade" id="filterSetting">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="container-fluid">
+          <center><h3>Filter by</h3></center>
+          <br>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="btn-group special" role="group">
+                <button id='nav-Supporter' type="button" ng-click="addCardType('Supporter')" class="btn btn-default">Supporter</button>
+                <button id='nav-Item' type="button" ng-click="addCardType('Item')" class="btn btn-default">Item</button>
+                <button id='nav-Pokémon Tool' type="button" ng-click="addCardType('Pokémon Tool')" class="btn btn-default">Pokémon Tool</button>
+                <button id='nav-Stadium' type="button" ng-click="addCardType('Stadium')" class="btn btn-default">Stadium</button>
+                <button id='nav-Energy' type="button" ng-click="addCardType('Energy')" class="btn btn-default">Energy</button>
+              </div> <!--- /button group -->
+            </div> <!-- /col-sm-12 -->
+          </div> <!-- /row -->
+          <center><h3>Or</h3></center>
+          <div class="row" id="startOfEnergy">
+            <div class="col-sm-12">
+              <div class="row energyFilter" >
+                <img ng-repeat="x in types" class="filterType" id="energy-pic-{{x.pokemonType}}" ng-click="energyFilter(x.pokemonType)" ng-src="{{x.imageUrl}}">
+              </div>
+            </div> <!-- /col-sm-5 -->
+          </div> <!-- /row -->
+          <center><h3>Or</h3></center>
+          <div class = "row" ng-click="clearThem()" >
+            <div class="col-sm-12">
+              <div class="btn-group special" role="group">
+                <button id='check-Standard' type="button" ng-click="checkBoxType('Standard')" class="btn btn-default">Standard</button>
+                <button id='check-Expanded' type="button" ng-click="checkBoxType('Expanded')" class="btn btn-default">Expanded</button>
+                <button id='check-Unlimited' type="button" ng-click="checkBoxType('Unlimited')" class="btn btn-default">Unlimited</button>
+              </div> <!--- /button group -->
+            </div>
+            <br>
+            <div class="col-sm-8 col-centered">
+              <input type="text" ng-model="searchCard" class="form-control" placeholder="Search a Card">
+            </div>
+
+          </div> <!-- /row -->
+          <br>
+          <center><button type="submit" data-dismiss="modal" ng-click="applyFilter()" class="btn btn-primary">Apply Filter </button></center>
+        </div> <!-- /container-fluid -->
+      </div> <!-- /modal-body -->
+    </div> <!-- /modal-content -->
+  </div> <!-- /modal-dialog -->
+</div> <!-- /modal fade -->
+
+
+<!-- Slider Carousel -->
+<div>
+  <div class="row">
+      <!-- Set button -->
+      <div id="deck_builder_buttons" class="col-md-8 col-md-offset-2" >
+        <div class="dropdown" id="deck_builder_setButton">
+          <button id='changeSet' class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Set
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu scrollable-menu">
+            <li ng-repeat='x in Sets' ng-click="changeSet(x.name)" ng-class="{'active':$index == 0, '': $index>0}" id="list-{{x.code}}" ><a href="">{{x.name}}</a></li>
+          </ul>
+        </div>
+        <button type="button" ng-if="!addedFilter" class="btn btn-primary" data-toggle="modal" data-target="#filterSetting" >Add a Filter</button>
+        <button type="button" ng-if="addedFilter" ng-click="removeFilter()" class="btn btn-danger">Remove Filter</button>
+        <p ng-if="emptySearch">Error: No {{errorCard}} in {{locationError}}</p>
+      </div>
+  </div>
+  <div class="row">
+    <div oncontextmenu="return false;" id="sliderCollection" class="col-md-12" sglclick="handleCard($event)"></div>
+  </div>
+</div>
+
+<div class="row" id="deck_builder_counts">
+  <div class="col-md-4">
+    <center>
+      <h3>Pokémon- <span id="Pokémon-Count"></span> </h3>
+      <ul id="Pokémon-ul">
+      </ul>
+    </center>
+  </div>
+  <div class="col-md-4">
+    <center>
+      <h3>Trainer- <span id="Trainer-Count"></span> </h3>
+      <ul id="Trainer-ul">
+      </ul>
+    </center>
+  </div>
+  <div class="col-md-4">
+    <center>
+      <h3>Energy- <span id="Energy-Count"></span></h3>
+      <ul id="Energy-ul">
+      </ul>
+    </center>
+  </div>
+</div> <!-- ./row -->
+
+<div class="row">
+  <div class="col-md-4">
+    <center><h3 ng-click="EditView()" > Edit your Deck <span id="EditButton" style="opacity: 1" class="glyphicon glyphicon-edit"></span></h3></center>
+  </div>
+  <div class="col-md-4">
+    <center><h3>Clear Deck <span class="glyphicon glyphicon-remove"></span></h3></center>
+  </div>
+  <div class="col-md-4">
+    <center><h3 ng-click="ShowSubmitDeck()">Submit Deck <span class="glyphicon glyphicon-ok"></span> </h3></center>
+  </div>
+</div>
+
+<h3 style="float:right;">Total Cards: {{DeckCount}}</h3>
+
+<!-- Modal Submit Deck -->
+<div class="modal fade" id="SubmitDeck">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span id="deck_builder_submit_close"  class="glyphicon glyphicon-remove"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="row deck_builder_submit_row">
+            <div class="col-md-2">
+              <label>Deck Name:</label>
+            </div>
+            <div class="col-md-4">
+              <input id="DeckName" ng-model="DeckName" type="text" class="form-control" placeholder="Deck Name">
+            </div>
+          </div>
+          <div class="row deck_builder_submit_row">
+            <div class="col-md-2">
+              <label>Deck Icon: </label>
+            </div>
+            <div class="col-md-10">
+              <div id="deck_builder_submit_icon">
+              </div>
+            </div>
+          </div>
+          <div class="row deck_builder_submit_row">
+            <div class="col-md-2">
+              <label>Deck Visibility to public: </label>
+            </div>
+            <div class="col-md-10">
+              <span ng-click="deckVisibility('On')" id="deck_builder_submit_visibility_On" class="deck_builder_submit_hover">On /</span> <span ng-click="deckVisibility('Off')" id="deck_builder_submit_visibility_Off" class="deck_builder_submit_hover">Off</span>
+            </div>
+          </div>
+          <div class="row deck_builder_submit_row">
+            <div class="col-md-2">
+              <label>Deck Comments</label>
+            </div>
+            <div class="col-md-10">
+              <span ng-click="deckComments('On')" class="deck_builder_submit_hover" id="deck_builder_submit_comments_On">On /</span> <span ng-click="deckComments('Off')" id="deck_builder_submit_comments_Off" class="deck_builder_submit_hover">Off</span>
+            </div>
+          </div>
+          <div class="row deck_builder_submit_row">
+            <div class="col-md-2">
+              <label>Deck Rotation: </label>
+            </div>
+            <div class="col-md-10">
+              <span ng-click="deckRotation('Standard')" id="deck_builder_submit_Standard" class="deck_builder_submit_hover">Standard /</span><span ng-click="deckRotation('Expanded')" id="deck_builder_submit_Expanded" class="deck_builder_submit_hover">Expanded /</span> <span ng-click="deckRotation('Unlimited')" id="deck_builder_submit_Unlimited" class="deck_builder_submit_hover">Unlimited /</span>
+            </div>
+          </div>
+          <div class="row deck_builder_submit_row" id="deck_builder_editor_div">
+            <center><label>Deck Description: </label></center>
+            <div id="editor"></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <p id="loginError"></p>
+        <button ng-click="SubmitDeck()" id='changeSet' class="btn btn-primary dropdown-toggle" type="button"  >Submit Deck</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Card Stuff -->
+<div  ng-repeat="z in cardModals" class="modal fade" id="modal-{{z.id}}" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <span class="subType" ng-if=" z.supertype =='Pokémon' "> <p> {{z.subtype}} </p> </span>
+            <h3 class="modal-title h3name"> {{z.name}}
+                <span class="right"> {{z.hp}} &nbsp;
+                    <img class="img-responsive typePokemon" ng-repeat='img in z.types' ng-src=images/type/{{img}}.png >
+                </span>
+            </h3>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-6">
+                        <img ng-src={{z.imageUrl}}>
+                  </div>
+                  <div class="col-md-6">
+                    <div ng-if='z.ability[0]'>
+                        <div class="row">
+                            <p>{{z.ability[0].name}}</p>
+                            <p>{{z.ability[0].text}}</p>
+                        </div>
+                        <div class="row">
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row" ng-if='z.attacks[0]'>
+                        <div class="row">
+                            <img ng-repeat="p in z.attacks[0].cost track by $index" class="img-responsive energyType" ng-src=images/type/{{p}}.png />
+                            <p class='lineText' >{{z.attacks[0].name}} {{z.attacks[0].damage}}</p>
+                        </div>
+                        <div class="row">
+                            <p ng-if='z.attacks[0].text' class="nameText" >{{z.attacks[0].text}}</p>
+                        </div>
+                        <div class="row">
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row" ng-if='z.attacks[1]'>
+                        <div class="row">
+                            <img ng-repeat="p in z.attacks[1].cost track by $index" class="img-responsive energyType" ng-src=images/type/{{p}}.png />
+                            <p class="lineText">{{z.attacks[1].name}} {{z.attacks[1].damage}}</p>
+                        </div>
+                        <div class="row">
+                            <p ng-if='z.attacks[1].text' class="nameText">{{z.attacks[1].text}}</p>
+                        </div>
+                        <div class="row">
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row" ng-if='z.attacks[2]'>
+                        <div class="row">
+                            <img  ng-repeat="p in z.attacks[2].cost track by $index" class="img-responsive energyType" ng-src=images/type/{{p}}.png />
+                            <p class="lineText">{{z.attacks[2].name}} {{z.attacks[2].damage}}</p>
+                        </div>
+                        <div class="row">
+                            <p ng-if='z.attacks[2].text' class="nameText">{{z.attacks[2].text}}</p>
+                        </div>
+                        <div class="row">
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row" ng-if="!z.nationalPokedexNumber">
+                        <div ng-if='z.text'>
+                            <p>{{z.text}}</p>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div style="height:200px;">
+</div>

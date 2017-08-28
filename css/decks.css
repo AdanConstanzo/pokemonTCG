@@ -1,0 +1,192 @@
+#home_body{
+    background-color: #e9f4ff;
+}
+
+#deck_colorLogo{
+    position: fixed;
+    width: 200px;
+    bottom: 25px;
+    right: 25px;
+}
+
+#deck_deckRaitingInfo,#deck_userRow,#deck_deckDetails,#deck_deckInfo{
+  border: 1px solid black;
+}
+
+#deck_upvote,#deck_heart{
+    width: 25px;
+    height: 25px;
+    margin-left: 25px;
+}
+
+#deck_downvote {
+  margin-top: -10px;
+  width: 25px;
+  height: 25px;
+  margin-left: 25px;
+}
+
+#deck_downvote:hover{
+    content: url(images/website/Down-Red.png);
+}
+
+#deck_upvote:hover{
+    content: url(images/website/Up-Green.png);
+}
+
+#deck_heart:hover{
+    content: url(images/website/Full_Heart.png);
+}
+
+#deck_gif{
+    width: 75px;
+    margin-left: 5px;
+    border-radius: 50px;
+    background-color:black;
+}
+
+#deck_count{
+  font-size: 25px;
+  margin-left: 10px;
+}
+
+#deck_deck_name{
+    font-size: 60px;
+    color: #fff290;
+    font-family:fantasy;
+}
+
+#deck_time_stamp{
+    font-size: 20px;
+    font-family: New Century Schoolbook;
+}
+
+#deck_rotation img{
+    width: 60px;
+    vertical-align: middle;
+}
+
+#deck_rotation span{
+    font-size: 30px;
+}
+
+#deck_cardCount{
+    margin-top: 20px;
+    padding: 0px;
+}
+
+#deck_cardCount li{
+    font-size: 25px;
+    font-family: fantasy;
+    display: inline;
+}
+
+#deck_userRow{
+    position: relative;
+    padding: 14px;
+    background-color: #d44027;
+}
+
+
+#deck_userRow>*{
+    color: white;
+}
+
+#deck_user{
+  width: 6em;
+  border-radius: 35%;
+}
+
+#deck_username{
+    padding: 20px;
+    font-size: 20px;
+    font-family:New Century Schoolbook;
+}
+
+#deck_userPokeImage{
+  float: right;
+  width: 100px;
+}
+
+
+#deck_pokemonTcg{
+    font-size: 20px;
+    font-family:fantasy;
+}
+
+#deck_pokemonTcgUser{
+    font-size:20px;
+    font-family: New Century Schoolbook;
+}
+#deck_otherDecks{
+    margin-top: 5%;
+    font-size: 25px;
+    font-family: New Century Schoolbook;
+}
+
+
+
+.deck_user-comment img{
+  width: 6em;
+}
+#deck_deckRaitingInfo{
+  padding: 14px;
+}
+#deck_deckInfo,#deck_deckRaitingInfo{
+    background-color: #373737;
+}
+
+#deck_deckDescription>*,#deck_deckRaitingInfo>*{
+    color: #F4F4F4;
+}
+#deck_deckDescription p{
+    font-size: 18px;
+}
+#deck_CardList{
+    margin: 2% 0;
+    background-color: #DCD0C0;
+    border-radius: 15px;
+}
+
+
+#deck_CardList ul li{
+    font-size: 17px;
+    list-style-type: none;
+}
+#deck_CardList ul li a>div { display: none; }
+#deck_CardList ul li a div{
+    width: 200px;
+    background-color:aqua;
+    position: relative;
+}
+#deck_CardList ul li a div img{
+    width: 150px;
+    position: absolute;
+    margin-top: -250px;
+}
+#deck_CardList ul li a:hover>div {display: block;}
+
+
+.deck_userPicture{
+    margin-top: 20px;
+    background-color: #DCD0C0;
+    border-radius: 25px;
+}
+
+.deck_userPicture img{
+    display: block;
+    margin: 20 auto;
+}
+
+.deck_userPicture a {
+    font-size: 20px;
+}
+
+.deck_userComment{
+    background-color: #373737;
+}
+.deck_userComment p{
+    font-size: 18px;
+    padding: 10px;
+    color: white;
+}

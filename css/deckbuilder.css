@@ -1,0 +1,171 @@
+
+.carou{
+    margin-top: 20px;
+}
+
+.deckbuilder{
+	width: 50%;
+}
+
+.filterType{
+	width: 3vw;
+	margin: 10px 10px 0 0;
+	display: inline-block;
+	opacity: .7;
+}
+
+.deck_builder_submit_icon{
+  width: 3vw;
+  margin: 10px 10px 0 0;
+  display: inline-block;
+  opacity: .3;
+}
+
+.deck_builder_submit_icon:hover{
+  opacity: 1;
+}
+
+.saveDeckContent{
+	margin-left: 20px;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+
+/*	Id	*/
+
+#pokemonImage{
+	margin-left: 20px;
+	height: 50px;
+}
+
+#removeAllDeckContents{
+	float: right;
+	margin-right: 100px;
+}
+
+#saveDeckRow{
+	margin-top: 20px;
+}
+
+
+#sliderCollection{
+  background-color: #373737;
+  padding-top: 30px;
+  border-radius: 15px;
+}
+
+#deck_builder_buttons{
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #373737;
+  background-color: #373737;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#deck_builder_setButton{
+  display: inline;
+  margin: 5px;
+  width: 100px;
+}
+
+#deck_builder_counts{
+  background-color: #373737;
+  margin-top: 20px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+#deck_builder_counts>*{
+  color: white;
+}
+
+.deck_builder_submit_row{
+    margin-top: 20px;
+}
+
+#deck_builder_gif_pic{
+  width: 40px;
+  height: 40px;
+}
+
+.deck_builder_submit_hover{
+  font-size: 20px;
+}
+.deck_builder_submit_hover:hover{
+  font-weight: bold;
+}
+
+#sliderCollection ul{
+  border-radius: 15px;
+}
+#sliderCollection section button:before{
+  font-size: 15px;
+  color: white;
+}
+#sliderCollection div{
+  padding-bottom: 10px;
+}
+
+#startOfEnergy{
+	margin: 20px 0 0 0;
+}
+
+#wellDiv{
+	margin-top: 25px;
+}
+
+/* Slider's CSS  */
+.slider {
+    width: 100%;
+    margin: 100px auto;
+}
+.slick-slide {
+  margin: 0px 20px;
+}
+.slick-slide img {
+  width: 100%;
+}
+.slick-prev:before,
+.slick-next:before {
+    color: black;
+}
+
+.btn-group.special {
+  display: flex;
+}
+
+.special .btn {
+  flex: 1
+}
+
+.col-centered{
+    float: none;
+    margin: 30px auto;
+}
+
+
+.cardListA:hover {text-decoration: line-through;}
+
+.cardListLi a { position:relative; font-size: 16px;}
+.cardListLi  span {display: none; }
+/*.cardListLi a:hover span{ display: block;}*/
+#deck_builder_submit_close{
+  float: right;
+}
+#deck_builder_editor_div div{
+    width: 80%;
+    margin-left: 10%;
+}
+#editor{
+  height:200px;
+}
+
+#loginError{
+  color: red;
+  font-size: 20px;
+}

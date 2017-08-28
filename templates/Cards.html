@@ -1,0 +1,237 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-2" id="dropBar" >
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" id="target" type="button" data-toggle="dropdown">Set <span class="caret"></span></button>
+                <ul class="dropdown-menu scrollable-menu" >
+                    <li ng-repeat="x in PokemonSet"><a href="" ng-click="set(x)" >{{x.name}}</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-sm-3 col-md-3" >
+            <form class="navbar-form" role="search">
+            <div class="input-group">
+                <input ng-model="PokemonSearch" type="text" class="form-control" placeholder="Enter a Pokemon" >
+                <div class="input-group-btn">
+                    <button ng-click="searchCard()" class="btn btn-default" type="submit"><i id="searchButton" class="glyphicon glyphicon-search"></i></button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12" id="imageSourceCarousel">
+    <div class="row cardsView" ng-repeat="x in imageSource">
+        <a href="">
+            <img class="img-responsive pokemon-cards" ng-click="cardClick(x)" data-toggle="modal" data-target="#{{x.id}}" ng-src={{x.imageUrl}} alt={{x.id}} />
+        </a>
+    </div>
+</div>
+
+<div class="col-md-12" id="searchSourceCarousel">
+    <div class="row cardsView" ng-repeat="x in searchSource">
+        <a href="">
+            <img class="img-responsive pokemon-cards" ng-click="cardClick(x)" data-toggle="modal" data-target="#{{x.id}}" ng-src={{x.imageUrl}} alt={{x.id}} />
+        </a>
+    </div>
+</div>
+
+<div ng-repeat="x in imageSource">
+    <div class="modal fade" id={{x.id}} >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <span class="subType" ng-if=" x.supertype =='Pokémon' "> <p> {{x.subtype}} </p> </span>
+                    <h3 class="modal-title h3name"> {{x.name}} 
+                        <span class="right"> {{x.hp}} &nbsp; 
+                            <img class="img-responsive typePokemon" ng-repeat='img in x.types' ng-src=images/type/{{img}}.png > 
+                        </span> 
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-md-6">
+                                <img ng-src={{x.imageUrl}}>
+                          </div>
+                          <div class="col-md-6">
+                            <div ng-if='x.ability[0]'>
+                                <div class="row">
+                                    <p>{{x.ability[0].name}}</p>
+                                    <p>{{x.ability[0].text}}</p>
+                                </div>
+                                <div class="row">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row" ng-if='x.attacks[0]'>
+                                <div class="row">
+                                    <img ng-repeat="p in x.attacks[0].cost track by $index" class="img-responsive energyType" ng-src=images/type/{{p}}.png />
+                                    <p class='lineText' >{{x.attacks[0].name}} {{x.attacks[0].damage}}</p>
+                                </div>
+                                <div class="row">
+                                    <p ng-if='x.attacks[0].text' class="nameText" >{{x.attacks[0].text}}</p>
+                                </div>
+                                <div class="row">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row" ng-if='x.attacks[1]'>
+                                <div class="row">
+                                    <img ng-repeat="p in x.attacks[1].cost track by $index" class="img-responsive energyType" ng-src=images/type/{{p}}.png />
+                                    <p class="lineText">{{x.attacks[1].name}} {{x.attacks[1].damage}}</p>
+                                </div>
+                                <div class="row">
+                                    <p ng-if='x.attacks[1].text' class="nameText">{{x.attacks[1].text}}</p>
+                                </div>
+                                <div class="row">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row" ng-if='x.attacks[2]'>
+                                <div class="row">
+                                    <img  ng-repeat="p in x.attacks[2].cost track by $index" class="img-responsive energyType" ng-src=images/type/{{p}}.png />
+                                    <p class="lineText">{{x.attacks[2].name}} {{x.attacks[2].damage}}</p>
+                                </div>
+                                <div class="row">
+                                    <p ng-if='x.attacks[2].text' class="nameText">{{x.attacks[2].text}}</p>
+                                </div>
+                                <div class="row">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="!x.nationalPokedexNumber">
+                                <div ng-if='x.text'>
+                                    <p>{{x.text}}</p>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class='input-group' id="member-{{x.id}}">
+                        <span class='input-group-btn'>
+                            <button ng-click="handleQuantity(0)" id='minus'  type='button' class='btn btn-danger btn-number' data-type='minus' data-field='quant[2]'>
+                                <span class='glyphicon glyphicon-minus'></span>
+                            </button>
+                        </span>
+                        <input ng-blur="handleQuantity(2)" type="number" id='card-quantity-{{x.id}}' name='quant[2]' class='form-control input-number' model="cardIdQuantity" min='0' max='100' >
+                        <span class='input-group-btn'>
+                            <button ng-click="handleQuantity(1)" type='button' id='plus' class='btn btn-success btn-number' data-type='plus' data-field='quant[2]'>
+                                <span class='glyphicon glyphicon-plus'></span>
+                            </button>
+                        </span>
+                    </div>
+                    <div id="nonMember-{{x.id}}">
+                        <center><h3>Log In to Add to Collection</h3></center>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+
+<div ng-repeat="x in searchSource">
+    <div class="modal fade" id={{x.id}} >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <span class="subType" ng-if=" x.supertype =='Pokémon' "> <p> {{x.subtype}} </p> </span>
+                    <h3 class="modal-title h3name"> {{x.name}} 
+                        <span class="right"> {{x.hp}} &nbsp; 
+                            <img class="img-responsive typePokemon" ng-repeat='img in x.types' ng-src=images/type/{{img}}.png > 
+                        </span> 
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-md-6">
+                                <img ng-src={{x.imageUrl}}>
+                          </div>
+                          <div class="col-md-6">
+                            <div ng-if='x.ability[0]'>
+                                <div class="row">
+                                    <p>{{x.ability[0].name}}</p>
+                                    <p>{{x.ability[0].text}}</p>
+                                </div>
+                                <div class="row">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row" ng-if='x.attacks[0]'>
+                                <div class="row">
+                                    <img ng-repeat="p in x.attacks[0].cost track by $index" class="img-responsive energyType" ng-src=images/type/{{p}}.png />
+                                    <p class='lineText' >{{x.attacks[0].name}} {{x.attacks[0].damage}}</p>
+                                </div>
+                                <div class="row">
+                                    <p ng-if='x.attacks[0].text' class="nameText" >{{x.attacks[0].text}}</p>
+                                </div>
+                                <div class="row">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row" ng-if='x.attacks[1]'>
+                                <div class="row">
+                                    <img ng-repeat="p in x.attacks[1].cost track by $index" class="img-responsive energyType" ng-src=images/type/{{p}}.png />
+                                    <p class="lineText">{{x.attacks[1].name}} {{x.attacks[1].damage}}</p>
+                                </div>
+                                <div class="row">
+                                    <p ng-if='x.attacks[1].text' class="nameText">{{x.attacks[1].text}}</p>
+                                </div>
+                                <div class="row">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row" ng-if='x.attacks[2]'>
+                                <div class="row">
+                                    <img  ng-repeat="p in x.attacks[2].cost track by $index" class="img-responsive energyType" ng-src=images/type/{{p}}.png />
+                                    <p class="lineText">{{x.attacks[2].name}} {{x.attacks[2].damage}}</p>
+                                </div>
+                                <div class="row">
+                                    <p ng-if='x.attacks[2].text' class="nameText">{{x.attacks[2].text}}</p>
+                                </div>
+                                <div class="row">
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="!x.nationalPokedexNumber">
+                                <div ng-if='x.text'>
+                                    <p>{{x.text}}</p>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class='input-group' id="member-{{x.id}}">
+                        <span class='input-group-btn'>
+                            <button ng-click="handleQuantity(0)" id='minus'  type='button' class='btn btn-danger btn-number' data-type='minus' data-field='quant[2]'>
+                                <span class='glyphicon glyphicon-minus'></span>
+                            </button>
+                        </span>
+                        <input type="number" id='card-quantity-{{x.id}}' name='quant[2]' class='form-control input-number' model="cardIdQuantity" min='0' max='100' >
+                        <span class='input-group-btn'>
+                            <button ng-click="handleQuantity(1)" type='button' id='plus' class='btn btn-success btn-number' data-type='plus' data-field='quant[2]'>
+                                <span class='glyphicon glyphicon-plus'></span>
+                            </button>
+                        </span>
+                    </div>
+                    <div id="nonMember-{{x.id}}">
+                        <center><h3>Log In to Add to Collection</h3></center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
