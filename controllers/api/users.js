@@ -6,6 +6,27 @@ var User   = require('../../models/User');
 var Cards  = require('../../models/Cards');
 var config = require('../../config');
 
+/* Multer Pratice */
+
+var multer  = require('multer')
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now()+'.jpg')
+  }
+})
+
+var upload = multer({ storage: storage })
+
+router.post('/users/profileImage', upload.single('profileImage'), function (req, res, next) {
+
+  res.json({success:true,message:'Image Saved!'})
+  // req.file is the `avatar` file
+  // req.body will hold the text fields, if there were any
+})
+
 // grabs a single user by auth.username
 router.get('/users',function (req,res,next) {
     if (!req.headers['x-auth']) {
