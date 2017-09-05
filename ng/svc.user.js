@@ -2,6 +2,12 @@ angular.module('app').service('UserSvc', function ($http,$q) {
 
     var svc = this;
 
+    svc.SetUserProfileImage = function(username,image){
+      return $http.post('api/users/profileImage/',{image:image}).then(function(response){
+        console.log(response);
+      })
+    }
+
     svc.checkUsername = function(username){
         username = username.toUpperCase();
         console.log(username);
@@ -20,7 +26,8 @@ angular.module('app').service('UserSvc', function ($http,$q) {
         })
     }
 
-    // get a user
+    // get current users info
+    // requires autentication
     svc.getUser = function () {
         return $http.get('/api/users')
             .then(function (response) {
@@ -53,6 +60,7 @@ angular.module('app').service('UserSvc', function ($http,$q) {
     };
 
     // get user's info wiht username
+    // requires autentication
     svc.getUserPublicInfo = function(username)
     {
         return $http.get('/api/users/user/'+username)
@@ -60,6 +68,16 @@ angular.module('app').service('UserSvc', function ($http,$q) {
         {
             return response.data
         })
+    }
+
+    svc.getUserOpenInfo = function(username){
+      return $http.get('/api/users/userOpen/'+username).then(function(response){return response.data; })
+    }
+
+    svc.getUserImage = function(username){
+      return svc.getUserOpenInfo(username).then(function(userInfo){
+        return userInfo['user_image'];
+      });
     }
 
     svc.logout = function()

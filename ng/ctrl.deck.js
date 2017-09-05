@@ -1,9 +1,13 @@
-angular.module("app").controller("DeckCtrl", function ($scope,$routeParams,DeckBuilderSvc,GetCardSvc) {
-  //http://localhost:3000/#/user-dan-deck-Bug%20Bug
+angular.module("app").controller("DeckCtrl", function ($scope,$routeParams,DeckBuilderSvc,GetCardSvc,UserSvc) {
   DeckBuilderSvc.getUsersPublicDeck($routeParams.username.slice(1),$routeParams.deckname.slice(1))
   .then(function(response){
     console.log(response);
     $scope.UserName = response.Username;
+    //getUserPublicInfo
+    UserSvc.getUserImage(response.Username).then(function(userImage){
+      $scope.userImage = userImage;
+    });
+
     $scope.Raiting = response.Raiting;
     $scope.DeckName = response.DeckName;
     $scope.DeckIcon = response.DeckSettings.icon;

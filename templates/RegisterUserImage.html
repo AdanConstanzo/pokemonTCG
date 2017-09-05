@@ -1,14 +1,31 @@
 <div class="col-md-8 col-md-offset-2" id="register_user_images_loginError">
-  <div class="col-md-12">
+  <div class="row">
     <h3 id="register_user_images_h3">Do you want to add a picture to your profile?</h3>
   </div>
-  <div class="col-md-12">
+  <div class="row">
     <img id="register_user_images_userImage" src="/images/users/blank_user.png" />
   </div>
-  <div id="register_user_images_div_folder" class="col-md-12">
-    <input class="btn btn-default" type="button" value="Choose from folder">
+  <div id="register_user_images_div_folder" class="row">
+    <input class="btn btn-default col-md-5" id="register_user_images_file" type="file">
+    <input class="btn btn-default col-md-2 col-md-offset-2" ng-click="add()" type="submit" value="Submit">
   </div>
   <div id="register_user_images_div_skip">
     <a id="register_user_images_a_skip" ng-click="Redirect()" class="btn btn-default" role="button">Skip</a>
   </div>
 </div>
+
+<!--
+<form action="/api/users/profileImage/" method="post" enctype="multipart/form-data">
+  <input id="ImgFILE" name="myFile" type="file">
+  <input name="width" value="50%" style="display:none">
+  <input name="widgetId" value="123" style="display:none">
+  <br/>
+  <button type="submit" ng-click="submit()">Upload Image</button>
+</form>
+-->
+<form ng-submit="submit()">
+  <div>
+    <label for="">image</label>
+    <input type="file" id="file">
+    <button>Post</button>
+</form>

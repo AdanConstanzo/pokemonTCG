@@ -6,12 +6,15 @@ var User   = require('../../models/User');
 var Cards  = require('../../models/Cards');
 var config = require('../../config');
 
-/* Multer Pratice */
+function authenticate(req, res, next) {
+    if (req.session.user) { return next() }
+    return res.sendStatus(401);
+}
 
-var multer  = require('multer')
+var multer = require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/')
+    cb(null, 'uploads/users/')
   },
   filename: function (req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now()+'.jpg')
@@ -20,11 +23,14 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage })
 
-router.post('/users/profileImage', upload.single('profileImage'), function (req, res, next) {
 
-  res.json({success:true,message:'Image Saved!'})
-  // req.file is the `avatar` file
-  // req.body will hold the text fields, if there were any
+router.post('/users/profileImage',authenticate,upload.any(),function(req,res,next){
+  console.log(  req.session.user);
+
+  var file = req.files[0];
+  var path = file.destination+file.filename;
+
+  console.log(path);
 })
 
 // grabs a single user by auth.username
@@ -72,7 +78,8 @@ router.post('/users',function(req,res,next){
         last_name: req.body.last_name,
         username: req.body.username,
         email: req.body.email,
-        usernameLogin: req.body.username.toUpperCase()
+        usernameLogin: req.body.username.toUpperCase(),
+        user_image: "images/users/blank_user.png"
     });
     // makes a hash to encrypt password.
     bcrypt.hash(req.body.password,10,function(err,hash){
@@ -86,7 +93,8 @@ router.post('/users',function(req,res,next){
     });
 });
 
-// gets user's public info
+// gets current user's information
+// requires autentication
 router.get('/users/user/:username',authenticate,function(req,res,next)
 {
     if(req.session.user.username == req.params.username)
@@ -97,6 +105,14 @@ router.get('/users/user/:username',authenticate,function(req,res,next)
             res.send(username[0])
         })
 })
+
+// gets users open info
+router.get('/users/userOpen/:username',function(req,res,next){
+  User.find({username:req.params.username}).exec(function(err,userInfo){
+      if(err){return next(err)}
+      res.send(userInfo[0]);
+  });
+});
 
 function authenticate(req, res, next) {
 
