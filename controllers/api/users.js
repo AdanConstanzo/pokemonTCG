@@ -1,6 +1,7 @@
 var router = require('express').Router();
 var bcrypt = require('bcrypt');
 var jwt    = require('jwt-simple');
+var fs     = require('fs');
 var _      = require('lodash')
 var User   = require('../../models/User');
 var Cards  = require('../../models/Cards');
@@ -11,10 +12,11 @@ function authenticate(req, res, next) {
     return res.sendStatus(401);
 }
 
+
 var multer = require('multer');
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/users/')
+    cb(null, 'uploads/users/profileImage/')
   },
   filename: function (req, file, cb) {
     cb(null, file.fieldname + '-' + Date.now()+'.jpg')
@@ -23,14 +25,22 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage })
 
-
+// only works when user wants to change profile pic
 router.post('/users/profileImage',authenticate,upload.any(),function(req,res,next){
-  console.log(  req.session.user);
+  console.log(req.files);
+  var fileDest = req.files[0].destination;
+  fileDest = fileDest.replace("uploads/","");
+  var publicPath = fileDest+req.files[0].filename;
+  var user = req.session.user.username;
+  var oldPath = req.session.user.user_image;
 
-  var file = req.files[0];
-  var path = file.destination+file.filename;
 
-  console.log(path);
+  User.update({username:user},{user_image:publicPath},function(err,docs){
+    if(err){return next(err)}
+    if(oldPath != 'images/users/blank_user.png')
+      fs.unlinkSync(__dirname+'/../../uploads/'+oldPath);
+    res.json({status:'success',newUrl:publicPath});
+  });
 })
 
 // grabs a single user by auth.username
@@ -65,10 +75,22 @@ router.get('/users/session',function(req,res,next){
 })
 
 // destroy sessions
-router.get('/users/logout',function(req,res,next)
-{
+router.get('/users/logout',function(req,res,next){
     req.session.destroy();
     return res.status(200).send()
+})
+
+router.get('/users/register/session/',function(req,res,next){
+  delete req.session.register;
+  return res.status(200).send();
+})
+
+router.get('/users/register/session/status',function(req,res,next){
+  if(req.session.register)
+    res.json({fuck:'you'});
+  else
+    res.json({da:'fuq'});
+  console.log(req.session.register);
 })
 
 // creates a new user based on all user info.
@@ -85,6 +107,7 @@ router.post('/users',function(req,res,next){
     bcrypt.hash(req.body.password,10,function(err,hash){
         if(err) {return next(err)}
         user.password = hash;
+        req.session.register = true;
         //saves user to db.
         user.save(function (err) {
             if (err) { return next(err) }

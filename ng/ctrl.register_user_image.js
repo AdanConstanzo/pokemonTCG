@@ -1,8 +1,6 @@
 angular.module('app').controller('RegisterUserImage',function($scope,$location,UserSvc,$http){
-  // URL and ID
-  ///register-:username-userBanner
-  //register_user_images_a_skip
-  /*
+  $scope.Register_User_Image_userImage = "/images/users/blank_user.png";
+
   var RegisterUserImage = {};
 
   UserSvc.hasSession().then(function(response){
@@ -17,7 +15,6 @@ angular.module('app').controller('RegisterUserImage',function($scope,$location,U
     }
   })
   $scope.Redirect = function(){
-    console.log('was');
     $location.path("/register-"+ RegisterUserImage['username'] +"-userBanner")
   }
   //$location.path('/register-'+username+'-userImg');
@@ -35,12 +32,12 @@ angular.module('app').controller('RegisterUserImage',function($scope,$location,U
 
     r.readAsBinaryString(f);
 }
-  */
 
   $scope.submit = function(){
     var formData = new FormData;
-
-    var file = $('#file')[0].files[0];
+    var nextStep = document.getElementById('register_user_images_a_skip');
+    nextStep.innerHTML = "Next Step";
+    var file = $('#register_user_images_file')[0].files[0];
     formData.append('image',file);
 
 
@@ -50,9 +47,14 @@ angular.module('app').controller('RegisterUserImage',function($scope,$location,U
         'Content-Type':undefined
       }
     }).then(function(res){
-
+      $scope.Register_User_Image_userImage = res.data.newUrl;
     })
-    
+
   };
+
+  $http.get('http://localhost:3000/api/users/register/session/status/')
+  .then(function(response){
+    console.log(response.data);
+  })
 
 });
