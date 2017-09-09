@@ -13,7 +13,15 @@ angular.module('app').controller('RegisterUserImage',function($scope,$location,U
         var error = document.getElementById("register_user_images_loginError");
         error.innerHTML = "Please Login In";
     }
+  });
+
+  UserSvc.CheckRegister().then(function(response){
+    if(!response){
+      var error = document.getElementById("register_user_images_loginError");
+      error.innerHTML = "You already Register";
+    }
   })
+
   $scope.Redirect = function(){
     $location.path("/register-"+ RegisterUserImage['username'] +"-userBanner")
   }
@@ -52,9 +60,7 @@ angular.module('app').controller('RegisterUserImage',function($scope,$location,U
 
   };
 
-  $http.get('http://localhost:3000/api/users/register/session/status/')
-  .then(function(response){
-    console.log(response.data);
-  })
+
+
 
 });

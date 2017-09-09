@@ -10,6 +10,7 @@ router.use(require("./set"))
 router.use(require("./collection"))
 router.use(require('./gif'))
 router.use(require("./deckbuilder"));
-router.use(require('./pokemon_type'))
+router.use(require('./pokemon_type'));
+router.use(require('./silhouette'));
 
 module.exports = router;

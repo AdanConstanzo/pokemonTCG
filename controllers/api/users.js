@@ -87,10 +87,9 @@ router.get('/users/register/session/',function(req,res,next){
 
 router.get('/users/register/session/status',function(req,res,next){
   if(req.session.register)
-    res.json({fuck:'you'});
+    res.json(true);
   else
-    res.json({da:'fuq'});
-  console.log(req.session.register);
+    res.json(false);
 })
 
 // creates a new user based on all user info.

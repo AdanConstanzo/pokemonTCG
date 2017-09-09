@@ -2,6 +2,13 @@ angular.module('app').service('UserSvc', function ($http,$q) {
 
     var svc = this;
 
+    svc.CheckRegister = function(){
+      return $http.get('api/users/register/session/status/')
+      .then(function(response){
+        return response.data;
+      })
+    }
+
     svc.SetUserProfileImage = function(username,image){
       return $http.post('api/users/profileImage/',{image:image}).then(function(response){
         console.log(response);
