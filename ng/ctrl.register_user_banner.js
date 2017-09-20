@@ -1,33 +1,32 @@
-angular.module('app').controller('RegisterUserBanner',function($scope,$http,$location,UserSvc,SilhouetteSvc){
+angular.module('app').controller('RegisterUserBanner',function($scope,$location,UserSvc,SilhouetteSvc){
 
-  UserSvc.hasSession().then(function(response){
-    if(response){
+  var RegisterUserBanner = {};
+  RegisterUserBanner['banner'] = null;
+
+  UserSvc.CheckRegisterAndLogin("register_user_banner_loginError",RegisterUserBanner)
+  .then(function(res){
+    if(res)
       UserSvc.checkLogIn().then(function(user){
         $scope.register_user_banner_UserName = user;
         UserSvc.getUserImage(user).then(function(img){
           var imgs = document.getElementById('register_user_banner_profileImage');
-          imgs.src = img;
+          imgs.src = img.userImage;
         });
-      })
-    }else {
-        var error = document.getElementById("register_user_banner_loginError");
-        error.innerHTML = "Please Login In";
-    }
+      });
   });
-  /*
-  UserSvc.CheckRegister().then(function(response){
-    if(!response){
-      var error = document.getElementById("register_user_banner_loginError");
-      error.innerHTML = "You already Register";
-    }
-  })
-  */
 
   SilhouetteSvc.getAllSilhouette().then(function(response){
     $scope.register_user_banner_Silhouettes = response;
+    RegisterUserBanner['banner'] = response;
     $scope.register_user_banner_SillouetImage = response[0].imagePath;
     $scope.register_user_banner_SillouetImage_back = response[0].background;
   })
+
+  $scope.SubmitFinish = function(){
+    var bannerObject = RegisterUserBanner['banner'];
+    UserSvc.SetUserBannerObject(bannerObject);
+    UserSvc.destroyRegisterSession();
+  }
 
   $scope.register_user_banner_ChangeSilhouette = function(){
     $('#register_user_banner_modal').modal('show');
@@ -36,6 +35,7 @@ angular.module('app').controller('RegisterUserBanner',function($scope,$http,$loc
   $scope.AssignImage = function(banner){
     var color = banner.background;
     var path  = banner.imagePath;
+    RegisterUserBanner['banner'] = banner;
     $scope.register_user_banner_SillouetImage = path;
     $scope.register_user_banner_SillouetImage_back = color;
   }

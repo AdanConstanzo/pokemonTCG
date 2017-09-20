@@ -13,7 +13,7 @@ var obj = [
   new Silhouette({
     imagePath:'/images/Silhouette/Charizard.png',
     name:'Charizard',
-    background:hexColors[0]
+    background:'#d44027'
   }),
   new Silhouette({
     imagePath:'/images/Silhouette/Dragonite.png',

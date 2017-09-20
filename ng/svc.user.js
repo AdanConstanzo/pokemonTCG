@@ -2,6 +2,27 @@ angular.module('app').service('UserSvc', function ($http,$q) {
 
     var svc = this;
 
+    svc.CheckRegisterAndLogin = function(pageId,RegisterUserImage){
+      return svc.hasSession().then(function(response){
+        if(response){
+          svc.CheckRegister().then(function(response){
+            if(!response){
+              var error = document.getElementById(pageId);
+              error.innerHTML = "You already Register";
+            }else{
+              svc.checkLogIn().then(function(response){
+                RegisterUserImage['username'] = response;
+              });
+            }
+          });
+        }else {
+            var error = document.getElementById(pageId);
+            error.innerHTML = "Please Login In";
+            return false;
+        }
+      });
+    }
+
     svc.CheckRegister = function(){
       return $http.get('api/users/register/session/status/')
       .then(function(response){
@@ -9,8 +30,21 @@ angular.module('app').service('UserSvc', function ($http,$q) {
       })
     }
 
-    svc.SetUserProfileImage = function(username,image){
-      return $http.post('api/users/profileImage/',{image:image}).then(function(response){
+    svc.SetUserProfileImage = function(Form){
+      return $http.post('api/users/profileImage/',Form,{ transformRequest:angular.identity, headers:{'Content-Type':undefined}}).then(function(response){
+        return response.data;
+      })
+    }
+
+    svc.destroyRegisterSession = function(){
+      return $http.get('api/users/register/session/destroy/').then(function(res){
+        return res.data;
+      })
+    }
+
+    svc.SetUserBannerObject = function(bannerObject){
+      console.log(bannerObject);
+      return $http.post('api/users/SetUserBannerImage',{bannerObject:bannerObject}).then(function(response){
         console.log(response);
       })
     }
@@ -83,7 +117,10 @@ angular.module('app').service('UserSvc', function ($http,$q) {
 
     svc.getUserImage = function(username){
       return svc.getUserOpenInfo(username).then(function(userInfo){
-        return userInfo['user_image'];
+        var images = {};
+        images['userImage'] = userInfo['user_image'];
+        images['userBanner'] = userInfo['user_banner'];
+        return images
       });
     }
 

@@ -1,11 +1,15 @@
 angular.module("app").controller("DeckCtrl", function ($scope,$routeParams,DeckBuilderSvc,GetCardSvc,UserSvc) {
+
   DeckBuilderSvc.getUsersPublicDeck($routeParams.username.slice(1),$routeParams.deckname.slice(1))
   .then(function(response){
-    console.log(response);
     $scope.UserName = response.Username;
     //getUserPublicInfo
-    UserSvc.getUserImage(response.Username).then(function(userImage){
-      $scope.userImage = userImage;
+    UserSvc.getUserImage(response.Username).then(function(Images){
+      $scope.userImage = Images.userImage;
+      $scope.userBanner = Images.userBanner.imagePath;
+      var backgroundColor = Images.userBanner.background;
+      var deck_userRow = document.getElementById('deck_userRow');
+      deck_userRow.style.background = backgroundColor;
     });
 
     $scope.Raiting = response.Raiting;

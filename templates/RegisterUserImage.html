@@ -6,10 +6,11 @@
     <img id="register_user_images_userImage" ng-src={{Register_User_Image_userImage}} />
   </div>
   <form id="register_user_images_div_folder" ng-submit="submit()">
-      <input class="btn btn-default col-md-5" type="file" id="register_user_images_file" for="">
-      <button class="btn btn-default col-md-2 col-md-offset-2" ng-click="add()" type="submit"  >Submit</button>
+      <input class="btn btn-default col-md-5" custom-on-change="uploadFile" id="register_user_images_file" type="file"onchange="document.getElementById('register_user_images_userImage').src = window.URL.createObjectURL(this.files[0])">
   </form>
+
   <div id="register_user_images_div_skip">
     <a id="register_user_images_a_skip" ng-click="Redirect()" class="btn btn-default" role="button">Skip</a>
   </div>
+
 </div>

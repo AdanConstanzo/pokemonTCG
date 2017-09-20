@@ -11,6 +11,7 @@ var schema = new Schema({
     following: 		    [{user: String}],
 	  followers: 		    [{user: String}],
     user_image:       {type:String,required:true},
+    user_banner:      {type:Schema.Types.Object ,required:true},
 	  user_collection: 	[ { type: Schema.Types.Object } ]
 });
 

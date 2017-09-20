@@ -5,6 +5,7 @@ var fs     = require('fs');
 var _      = require('lodash')
 var User   = require('../../models/User');
 var Cards  = require('../../models/Cards');
+var Silhouette = require('../../models/Silhouette');
 var config = require('../../config');
 
 function authenticate(req, res, next) {
@@ -26,21 +27,37 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 
 // only works when user wants to change profile pic
-router.post('/users/profileImage',authenticate,upload.any(),function(req,res,next){
-  console.log(req.files);
-  var fileDest = req.files[0].destination;
+router.post('/users/profileImage/',upload.any(),function(req,res,next){
+  var fileDest;
+  if(req.files.length>0){
+    fileDest = req.files[0].destination
+  }else{
+    return res.sendStatus(500);
+  }
+
   fileDest = fileDest.replace("uploads/","");
   var publicPath = fileDest+req.files[0].filename;
   var user = req.session.user.username;
   var oldPath = req.session.user.user_image;
-
-
   User.update({username:user},{user_image:publicPath},function(err,docs){
     if(err){return next(err)}
     if(oldPath != 'images/users/blank_user.png')
       fs.unlinkSync(__dirname+'/../../uploads/'+oldPath);
     res.json({status:'success',newUrl:publicPath});
   });
+})
+
+router.post('/users/destroyRegisterSession/',function(req,res){
+
+})
+
+router.post('/users/SetUserBannerImage/',authenticate,function(req,res,next){
+  var user = req.session.user.username;
+  var userBanner = req.body.bannerObject;
+  User.update({username:user},{user_banner:userBanner},function(err,docs){
+    if(err){return next(err)}
+    res.json({status:'success',user_banner:userBanner});
+  })
 })
 
 // grabs a single user by auth.username
@@ -80,7 +97,7 @@ router.get('/users/logout',function(req,res,next){
     return res.status(200).send()
 })
 
-router.get('/users/register/session/',function(req,res,next){
+router.get('/users/register/session/destroy/',function(req,res,next){
   delete req.session.register;
   return res.status(200).send();
 })
@@ -100,7 +117,12 @@ router.post('/users',function(req,res,next){
         username: req.body.username,
         email: req.body.email,
         usernameLogin: req.body.username.toUpperCase(),
-        user_image: "images/users/blank_user.png"
+        user_image: "images/users/blank_user.png",
+        user_banner: new Silhouette({
+          imagePath:'/images/Silhouette/Charizard.png',
+          name:'Charizard',
+          background:'#d44027'
+        })
     });
     // makes a hash to encrypt password.
     bcrypt.hash(req.body.password,10,function(err,hash){
