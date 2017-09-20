@@ -36,36 +36,32 @@ angular.module('app').service('UserSvc', function ($http,$q) {
       })
     }
 
+    //
     svc.destroyRegisterSession = function(){
       return $http.get('api/users/register/session/destroy/').then(function(res){
         return res.data;
       })
     }
 
+    //
     svc.SetUserBannerObject = function(bannerObject){
-      console.log(bannerObject);
-      return $http.post('api/users/SetUserBannerImage',{bannerObject:bannerObject}).then(function(response){
-        console.log(response);
-      })
-    }
+      return $http.post('api/users/SetUserBannerImage',{bannerObject:bannerObject});
+    };
 
+    //
     svc.checkUsername = function(username){
         username = username.toUpperCase();
-        console.log(username);
-        return $http.get('/api/users/checkUsername/'+username)
-        .then(function(response){
+        return $http.get('/api/users/checkUsername/'+username).then(function(response){
             return response.data;
         });
     };
 
-    svc.checkEmail = function(email)
-    {
-        return $http.get('/api/users/checkEmail/'+email)
-        .then(function(response)
-        {
-            return response.data
-        })
-    }
+    //
+    svc.checkEmail = function(email){
+        return $http.get('/api/users/checkEmail/'+email).then(function(response){
+            return response.data;
+        });
+    };
 
     // get current users info
     // requires autentication
@@ -111,10 +107,12 @@ angular.module('app').service('UserSvc', function ($http,$q) {
         })
     }
 
+    //
     svc.getUserOpenInfo = function(username){
       return $http.get('/api/users/userOpen/'+username).then(function(response){return response.data; })
     }
 
+    //
     svc.getUserImage = function(username){
       return svc.getUserOpenInfo(username).then(function(userInfo){
         var images = {};
@@ -124,6 +122,7 @@ angular.module('app').service('UserSvc', function ($http,$q) {
       });
     }
 
+    //
     svc.logout = function()
     {
         return $http.get('/api/users/logout')
@@ -148,6 +147,7 @@ angular.module('app').service('UserSvc', function ($http,$q) {
         })
     }
 
+    //
     svc.deleteSingleCard = function(cardId)
     {
         return $http.post('/api/user/removeElement',{cardId:cardId})
