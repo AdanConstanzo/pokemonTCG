@@ -1,13 +1,13 @@
-angular.module('app').controller('RegisterUserImage',function($scope,$location,UserSvc,$http){
+angular.module('app').controller('RegisterUserImage',function($scope,$location,$http,UserSvc){
 
   $scope.Register_User_Image_userImage = "/images/users/blank_user.png";
 
   var RegisterUserImage = {};
 
-  UserSvc.CheckRegisterAndLogin("register_user_images_loginError",RegisterUserImage);
+  UserSvc.checkRegisterStatus();
 
   $scope.Redirect = function(){
-    $location.path("/register-"+ RegisterUserImage['username'] +"-userBanner")
+    $location.path("/register-userBanner")
   }
 
   $scope.uploadFile = function(){
@@ -19,6 +19,18 @@ angular.module('app').controller('RegisterUserImage',function($scope,$location,U
     var headers = { transformRequest:angular.identity, headers:{'Content-Type':undefined} };
     UserSvc.SetUserProfileImage(formData);
   };// End of uploadFile
+
+  var destoryRegister = function(){
+      UserSvc.destroyRegisterSession();
+  }
+
+  window.onbeforeunload = destoryRegister;
+
+
+  window.onhashchange = function(event){
+    if(event.newURL != "http://localhost:3000/#/register-userBanner")
+      destoryRegister();
+  }
 
 });// End of Controller
 

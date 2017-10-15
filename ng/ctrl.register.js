@@ -5,8 +5,8 @@ angular.module('app').controller('RegisterCtrl',function($scope,$location,UserSv
     	UserSvc.register(first_name,last_name,username,password,email)
         .then(function (user) {
             $scope.$emit('login',user);
-            $location.path('/register-'+username+'-userImg');
             window.location.reload();
+            $location.path('/register-userImg');
         });
 
     };

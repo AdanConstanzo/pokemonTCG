@@ -3,17 +3,16 @@ angular.module('app').controller('RegisterUserBanner',function($scope,$location,
   var RegisterUserBanner = {};
   RegisterUserBanner['banner'] = null;
 
-  UserSvc.CheckRegisterAndLogin("register_user_banner_loginError",RegisterUserBanner)
-  .then(function(res){
-    if(res)
-      UserSvc.checkLogIn().then(function(user){
-        $scope.register_user_banner_UserName = user;
-        UserSvc.getUserImage(user).then(function(img){
-          var imgs = document.getElementById('register_user_banner_profileImage');
-          imgs.src = img.userImage;
-        });
-      });
-  });
+  UserSvc.checkRegisterStatus()
+  .then(function(response){
+    UserSvc.checkLogIn().then(function(User){
+      $scope.register_user_banner_UserName = User;
+      UserSvc.getUserImage(User).then(function(UserImage){
+            var img = document.getElementById('register_user_banner_profileImage')
+            img.src = UserImage.userImage;
+      })
+    })
+  })
 
   SilhouetteSvc.getAllSilhouette().then(function(response){
     $scope.register_user_banner_Silhouettes = response;
@@ -39,5 +38,15 @@ angular.module('app').controller('RegisterUserBanner',function($scope,$location,
     $scope.register_user_banner_SillouetImage = path;
     $scope.register_user_banner_SillouetImage_back = color;
   }
+
+  var destoryRegister = function(){
+      UserSvc.destroyRegisterSession();
+  }
+
+  window.onbeforeunload = destoryRegister;
+
+
+  window.onhashchange = destoryRegister;
+
 
 }); /* End of Controller RegisterUserBanner */

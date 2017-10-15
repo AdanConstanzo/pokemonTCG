@@ -126,10 +126,12 @@ router.get('/users/register/session/destroy/',function(req,res,next){
 // Checks to see if register has session.
 //Session: register, OUT: Json
 router.get('/users/register/session/status',function(req,res,next){
-  if(req.session.register)
-    res.json(true);
-  else
-    res.json(false);
+  console.log(req.session.register);
+  if(req.session.register === true){
+    return res.sendStatus(201);
+  }else{
+    return res.sendStatus(404);
+  }
 })
 
 // creates a new user based with user info and create register session

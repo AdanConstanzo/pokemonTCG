@@ -1,14 +1,14 @@
-var Gif = require('../models/gifs');
+var Gif = require('../models/Gifs');
 
 var mongoose = require("mongoose");
 
 mongoose.connect('localhost:27017/gottatcg');
 /*
 var gijs = [
-    
+
     new Gif(
-    {   
-        url: 
+    {
+        url:
         pokemonNumber
     }),
     new Gif({

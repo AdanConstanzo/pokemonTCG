@@ -2,31 +2,10 @@ angular.module('app').service('UserSvc', function ($http,$q) {
 
     var svc = this;
 
-    svc.CheckRegisterAndLogin = function(pageId,RegisterUserImage){
-      return svc.hasSession().then(function(response){
-        if(response){
-          svc.CheckRegister().then(function(response){
-            if(!response){
-              var error = document.getElementById(pageId);
-              error.innerHTML = "You already Register";
-            }else{
-              svc.checkLogIn().then(function(response){
-                RegisterUserImage['username'] = response;
-              });
-            }
-          });
-        }else {
-            var error = document.getElementById(pageId);
-            error.innerHTML = "Please Login In";
-            return false;
-        }
-      });
-    }
-
-    svc.CheckRegister = function(){
+    svc.checkRegisterStatus = function(){
       return $http.get('api/users/register/session/status/')
       .then(function(response){
-        return response.data;
+        return response;
       })
     }
 
