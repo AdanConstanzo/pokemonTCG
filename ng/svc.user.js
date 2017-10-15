@@ -96,7 +96,7 @@ angular.module('app').service('UserSvc', function ($http,$q) {
         })
     };
 
-    // get user's info wiht username
+    // get user's info with username
     // requires autentication
     svc.getUserPublicInfo = function(username)
     {

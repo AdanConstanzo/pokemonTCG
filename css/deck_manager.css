@@ -1,0 +1,18 @@
+.deck_manager_decks{
+
+  display: inline-block;
+  padding: 10px;
+  margin-right: 20px;
+  background-color: #373737;
+  border-radius: 10px;
+  border: solid 2px black;
+}
+
+.deck_manager_decks *{
+  color: white;
+}
+
+.deck_manager_decks img{
+  width: 100px;
+  float: right;
+}

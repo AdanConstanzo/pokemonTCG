@@ -8,6 +8,7 @@ router.get('/sets/',function(req,res,next)
   .exec(function(err,sets){
     if(err){return next(err)}
     res.send(sets)
+    console.log(sets);
   })
 })
 

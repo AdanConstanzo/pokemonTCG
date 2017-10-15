@@ -13,4 +13,5 @@ angular.module('app')
             .when('/deck_builder',{controller:'DeckBuilderCtrl',templateUrl:'templates/DeckBuilder.html'})
             .when('/deckConformation:username-deck:deckname',{controller:'DeckConformationCtrl',templateUrl:'/templates/DeckConformation.html'})
             .when('/deck_manager',{controller:'DeckManagerCtrl',templateUrl:'/templates/DeckManager.html'})
+            .when('/user-:username',{controller:'UserContentCtrl',templateUrl:'templates/UserContent.html'})
     });

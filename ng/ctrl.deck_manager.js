@@ -10,6 +10,7 @@ app.controller("DeckManagerCtrl", function ($scope,UserSvc,DeckBuilderSvc) {
       DeckBuilderSvc.getMyDecks(user).then(function(response){
         $scope.User = user;
         $scope.UserDecks = response;
+        console.log(response[0]);
       })
     });
   });

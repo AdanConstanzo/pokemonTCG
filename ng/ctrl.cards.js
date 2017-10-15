@@ -1,8 +1,9 @@
 angular.module('app').controller('CardsCtrl', function ($scope,$location,$compile,GetCardSvc,UserSvc,SetSvc,CollectionSvc) {
-    
+
     SetSvc.getAllSets()
     .then(function(response)
     {
+      console.log(response);
         $scope.PokemonSet = response
         $scope.set(response[0])
     })
@@ -103,15 +104,15 @@ angular.module('app').controller('CardsCtrl', function ($scope,$location,$compil
             ctrlCardsObject.cardInput.value = ctrlCardsObject.finishedValue
 
         }
-        
+
         ctrlCardsObject.finishedValue = ctrlCardsObject.cardInput.value
     }
-    
+
     $scope.searchCard = function()
     {
         if($scope.PokemonSearch.length < 4 )
-            return 
-        
+            return
+
         if(ctrlCardsObject.isSearch)
             return clearSearch()
 
@@ -131,7 +132,7 @@ angular.module('app').controller('CardsCtrl', function ($scope,$location,$compil
             clearSearch()
 
         GetCardSvc.grabSetOfCardsBySet(link.name)
-        .then(function(product){            
+        .then(function(product){
             $scope.imageSource = product
             ctrlCardsObject.lastSet = link.name
             return changeSetName(link.name)
@@ -160,7 +161,7 @@ angular.module('app').controller('CardsCtrl', function ($scope,$location,$compil
     ctrlCardsObject.startingValue = 0
     // value we increment,decrement or set
     ctrlCardsObject.finishedValue = 0
-    // stores isSearch when 
+    // stores isSearch when
     ctrlCardsObject.isSearch = false
     // html object of searchBar
     ctrlCardsObject.searchButton = document.getElementById('searchButton')
