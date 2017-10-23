@@ -3,7 +3,6 @@ angular.module("app").controller("DeckCtrl", function ($scope,$routeParams,DeckB
   DeckBuilderSvc.getUsersPublicDeck($routeParams.username.slice(1),$routeParams.deckname.slice(1))
   .then(function(response){
     $scope.UserName = response.Username;
-    //getUserPublicInfo
     UserSvc.getUserImage(response.Username).then(function(Images){
       $scope.userImage = Images.userImage;
       $scope.userBanner = Images.userBanner.imagePath;

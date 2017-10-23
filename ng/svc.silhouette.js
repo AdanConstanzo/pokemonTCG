@@ -1,10 +1,12 @@
-angular.module('app').service('SilhouetteSvc', function ($http) {
+angular.module("app").service("SilhouetteSvc", function ($http) {
 
     var svc = this;
 
+    // returns all silhouette from db.
     svc.getAllSilhouette = function () {
-        return $http.get('/api/silhouette/').then(function(response){
-            return response.data
+        "use strict";
+        return $http.get("/api/silhouette/").then(function (response) {
+            return response.data;
         });
     };
 

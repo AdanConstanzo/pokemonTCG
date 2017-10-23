@@ -1,27 +1,20 @@
-angular.module("app").controller("CardManagerCtrl", function ($scope,$location,$location,UserSvc,CollectionSvc,GetCardSvc) {
+angular.module("app").controller("CardManagerCtrl", function ($scope, $location, $location, UserSvc, CollectionSvc, GetCardSvc) {
 
-  // handles if user is connected
-  UserSvc.hasSession()
-  .then(function(response)
-  {
-    if(!response)
-      return AuthenicationError()
+    // handles if user is connected
+    UserSvc.checkUserSession();
 
     CollectionSvc.getUserCollection()
-    .then(function(response)
-    {
-      response.forEach(function(call)
-      {
-        GetCardSvc.getOne(call.cardId)
-        .then(function(card)
-        {
-          card.quantity = call.quantity
-          $scope.collImageSource.push(card)
-        })
-      })
-    })
-  })
-
+        .then(function (collection) {
+            "use strict";
+            collection.forEach(function (call) {
+                GetCardSvc.getOne(call.cardId)
+                    .then(function (card) {
+                        card.quantity = call.quantity;
+                        $scope.collImageSource.push(card);
+                    });
+            });
+        });
+        
 //======= Variables ========/
   $scope.collImageSource = [];
   var collectionHandler = {}

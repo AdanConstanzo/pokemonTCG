@@ -8,11 +8,11 @@ angular.module('app').controller('CardsCtrl', function ($scope,$location,$compil
         $scope.set(response[0])
     })
 
-    UserSvc.hasSession()
-    .then(function(response)
-    {
-        $scope.loggedIn = response
-    })
+    UserSvc.returnSessionUserName()
+        .then(function (response) {
+            "use strict";
+            $scope.loggedIn = response;
+    });
 
 //==============   Modal Event Listeners ================//
 

@@ -590,25 +590,23 @@ app.controller("DeckBuilderCtrl", function ($scope,$compile,$location,GetCardSvc
 				deckCardsObject[x] = tempDeckObject[x];
 			}
 		}
-		UserSvc.hasSession()
-		.then(function(response){
-			if(response){
-				UserSvc.checkLogIn()
-				.then(function(response){
-					var userName = response;
-					DeckBuilderSvc.addDeck($scope.DeckName,deckCardsObject,userName,DeltaObject,DeckSettings)
-					.then(function(response){
+		UserSvc.returnSessionUserName()
+			.then(function(username){
+				"use strict";
+				if (username) {
+					var userName = username;
+					DeckBuilderSvc.addDeck($scope.DeckName, deckCardsObject, userName, DeltaObject, DeckSettings)
+					.then(function (response) {
 						localStorage.setItem("DeckBuilding",'{"count":0}');
-						deckBuilderObject.url =  "/deckConformation-"+userName+"-deck-"+$scope.DeckName;
+						deckBuilderObject.url =  "/deckConformation-" + userName + "-deck-" + $scope.DeckName;
 						deckBuilderObject.submit = true;
-						$('#SubmitDeck').modal('toggle');
-					})
-				})
-			}else {
+						$("#SubmitDeck").modal("toggle");
+					});
+				} else {
 					var error = document.getElementById("loginError");
 					error.innerHTML = "Please Login In";
-			}
-		})
+				}
+			});
 	}
 //================ ./User Input Function ================//
 

@@ -24,11 +24,11 @@ angular.module('app').controller('RegisterUserImage',function($scope,$location,$
       UserSvc.destroyRegisterSession();
   }
 
-  window.onbeforeunload = destoryRegister;
+
 
 
   window.onhashchange = function(event){
-    if(event.newURL != "http://localhost:3000/#/register-userBanner")
+    if(event.newURL != "http://localhost:3030/#/register-userBanner")
       destoryRegister();
   }
 

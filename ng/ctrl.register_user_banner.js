@@ -5,7 +5,7 @@ angular.module('app').controller('RegisterUserBanner',function($scope,$location,
 
   UserSvc.checkRegisterStatus()
   .then(function(response){
-    UserSvc.checkLogIn().then(function(User){
+    UserSvc.returnSessionUserName().then(function(User){
       $scope.register_user_banner_UserName = User;
       UserSvc.getUserImage(User).then(function(UserImage){
             var img = document.getElementById('register_user_banner_profileImage')
@@ -16,13 +16,14 @@ angular.module('app').controller('RegisterUserBanner',function($scope,$location,
 
   SilhouetteSvc.getAllSilhouette().then(function(response){
     $scope.register_user_banner_Silhouettes = response;
-    RegisterUserBanner['banner'] = response;
+    RegisterUserBanner['banner'] = response[0];
     $scope.register_user_banner_SillouetImage = response[0].imagePath;
     $scope.register_user_banner_SillouetImage_back = response[0].background;
   })
 
   $scope.SubmitFinish = function(){
     var bannerObject = RegisterUserBanner['banner'];
+    console.log(bannerObject);
     UserSvc.SetUserBannerObject(bannerObject);
     UserSvc.destroyRegisterSession();
   }
@@ -43,10 +44,11 @@ angular.module('app').controller('RegisterUserBanner',function($scope,$location,
       UserSvc.destroyRegisterSession();
   }
 
-  window.onbeforeunload = destoryRegister;
 
-
-  window.onhashchange = destoryRegister;
+  // window.onbeforeunload = destoryRegister;
+  //
+  //
+  // window.onhashchange = destoryRegister;
 
 
 }); /* End of Controller RegisterUserBanner */

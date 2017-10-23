@@ -1,29 +1,22 @@
-angular.module('app').controller('ApplicationCtrl', function ($scope,UserSvc,$location) {
+angular.module("app").controller("ApplicationCtrl", function ($scope, UserSvc, $location) {
 
     $scope.logout = function(){
-        
+        "use strict";
         UserSvc.logout()
+            .then(function (response) {
+                $location.path("/");
+                window.location.reload();
+            });
         $scope.currentUser = null;
         localStorage.clear();
-        $location.path('/');
-        window.location.reload();
     };
-    
-    UserSvc.hasSession()
-    .then(function(response)
-    {
-        if(response)
-        {
-            UserSvc.checkLogIn()
-            .then(function(response)
-            {
-                UserSvc.getUserPublicInfo(response)
-                .then(function(response)
-                {
-                    $scope.currentUser = response
-                })
-            })
-        }
-    })
+
+    UserSvc.returnSessionUserName()
+        .then(function (response) {
+            "use strict";
+            if (response) {
+                $scope.currentUser = response;
+            }
+        });
 
 });
