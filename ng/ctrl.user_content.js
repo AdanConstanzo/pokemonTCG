@@ -9,10 +9,12 @@ app.controller("UserContentCtrl", function ($scope,$routeParams,UserSvc) {
     $scope.user_content_userName = res.username;
     $scope.user_content_dateSince = "Feburary 2015";
     $scope.user_content_profileImage = res.user_image;
-    $scope.user_content_followers = 2;
     $scope.user_content_upvotes = 22;
 
   })
-  //user_content_profileImage
+  UserSvc.getFollowerCount(user_content.username)
+    .then(function (followers){
+        $scope.user_content_followers = followers.count;
+    });
 
 });

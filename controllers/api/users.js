@@ -179,6 +179,8 @@ router.post("/users", function (req, res, next) {
         email: req.body.email,
         usernameLogin: req.body.username.toUpperCase(),
         user_image: "images/users/blank_user.png",
+        following_count: 0,
+        followers_count: 0,
         user_banner: new Silhouette({
             imagePath: "/images/Silhouette/Charizard.png",
             name: "Charizard",
@@ -256,6 +258,22 @@ router.get("/users/checkEmail/:email", function (req, res, next) {
                 res.send(true);
             } else {
                 res.send(false);
+            }
+        });
+});
+
+router.get("/users/follower/count/:username", function (req, res, next) {
+    "use strict";
+    User.findOne({username: req.params.username})
+        .select("count")
+        .exec(function (err, userCount){
+            if (err) {
+                return next(err);
+            }
+            if (userCount === null) {
+                res.send(0);
+            } else {
+                res.send(userCount);
             }
         });
 });
