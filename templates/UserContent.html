@@ -1,27 +1,35 @@
-<div id="user_content_div_main">
-  <div class="container">
-    <!-- User Info Row -->
-    <div id="user_content_row_userInfo" class="row">
-      <img class="col-md-2 img-rounded" ng-src={{user_content_profileImage}} >
-      <div class="col-md-5">
-        <h2>{{user_content_userName}}</h2>
-        <p>User since {{user_content_dateSince}}</p>
-
-      </div>
-      <div class="col-md-offset-2 col-md-3">
-        <p>Followers {{user_content_followers}}</p>
-        <p>Following {{user_content_following}}</p>
-        <p>Upvotes {{user_content_upvotes}}</p>
-        <a href="">Follow</a>
-        <a href="">Report</a>
-        <a href="">Send Message</a>
-      </div>
-    </div>
-    <!-- Nav Bar Row -->
+<div class="col-md-12 container-fluid" id="user_content_div_body" >
+    <div id="user_content_div_main">
+        <div class="row">
+            <div id="user_content_row_userInfo" class="row">
+                <img class="col-md-2 img-rounded" ng-src={{user_content_profileImage}} >
+                <div class="col-md-5">
+                    <h2>{{user_content_userName}}</h2>
+                    <p>User since {{user_content_dateSince}}</p>
+                </div>
+                <div class="col-md-offset-2 col-md-3">
+                    <p>Followers {{user_content_followers}}</p>
+                    <p>Following {{user_content_following}}</p>
+                    <p>Upvotes {{user_content_upvotes}}</p>
+                    <a href="">Follow</a>
+                    <a href="">Report</a>
+                    <a href="">Send Message</a>
+                </div>
+            </div> <!-- end of user_content_row_userInfo -->
+        </div> <!-- end of container -->
+    </div> <!-- end of user_content_div_main -->
     <div class="row">
-      <!-- Content row -->
-      <div class="row">
-      </div>
+        <div class="col-md-12">
+            <ul id="user_content_ul_pills" class="nav nav-pills">
+              <li id="user_content_li_member" ng-click="liClick('user_content_li_member')" role="presentation" class="active"><a href="">Member</a></li>
+              <li id="user_content_li_posts" ng-click="liClick('user_content_li_posts')" role="presentation"><a href="">Posts</a></li>
+              <li id="user_content_li_decks" ng-click="liClick('user_content_li_decks')" role="presentation"><a href="">Decks</a></li>
+              <li id="user_content_li_card" ng-click="liClick('user_content_li_card')" role="presentation"><a href="">Card Collection</a></li>
+              <li id="user_content_li_fav" ng-click="liClick('user_content_li_fav')" role="presentation"><a href="">Favorites</a></li>
+              <li id="user_content_li_thread" ng-click="liClick('user_content_li_thread')" role="presentation"><a href="">Threads</a></li>
+              <li id="user_content_li_followers" ng-click="liClick('user_content_li_followers')" role="presentation"><a href="">Followers</a></li>
+              <li id="user_content_li_message" ng-click="liClick('user_content_li_message')" role="presentation"><a href="">Message</a></li>
+            </ul>
+        </div>
     </div>
-  </div>
 </div>

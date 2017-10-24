@@ -5,8 +5,15 @@
 }
 
 #user_content_div_main{
-  background-color: #bfbfbf;
     padding-top: 20px;
     padding-bottom: 20px;
     padding-left: 20px;
+}
+
+#user_content_ul_pills{
+    margin-bottom: 30px;
+}
+
+#user_content_div_body {
+    background-color: #bfbfbf;
 }
