@@ -162,10 +162,18 @@ angular.module('app').service('UserSvc', function ($http,$q) {
 
     svc.getFollowerCount = function (username) {
         "use strict";
-        return $http.get("/api/users/follower/count/"+username)
-        .then(function (userCount){
-            return userCount.data;
-        })
+        return $http.get("/api/users/follower/count/" + username)
+            .then(function (userCount) {
+                return userCount.data;
+            });
+    }
+
+    svc.getFollowingCount = function (username) {
+        "use strict";
+        return $http.get("/api/users/following/count/" + username)
+            .then(function (userCount){
+                return userCount.data;
+            });
     }
 
 })

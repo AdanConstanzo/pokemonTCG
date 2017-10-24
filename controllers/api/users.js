@@ -5,6 +5,8 @@ const fs     = require("fs");
 const _      = require("lodash")
 const User   = require("../../models/User");
 const Cards  = require("../../models/Cards");
+const Follower = require("../../models/Follower");
+const Following = require("../../models/Following");
 const Silhouette = require("../../models/Silhouette");
 const config = require("../../config");
 const path   = require("path");
@@ -21,6 +23,11 @@ function authenticate(req, res, next) {
         return next();
     }
     return res.sendStatus(401);
+}
+
+var sendJsonResponse = function (res, status, content) {
+    res.status(status);
+    res.json(content);
 }
 
         /********************/
@@ -262,19 +269,128 @@ router.get("/users/checkEmail/:email", function (req, res, next) {
         });
 });
 
+// give count on how many user is following.
+// based on paramater username
+router.get("/users/following/count/:username", function(req, res, next){
+    "use strict";
+    User.findOne({username: req.params.username})
+        .select("_id")
+        .exec(function (err, _id){
+            if (!_id) {
+                sendJsonResponse(res, 404, {"message": "User not found."})
+                return;
+            } else if (err) {
+                sendJsonResponse(res, 404, err);
+                return;
+            }
+            Following.find({user_id: _id._id})
+                .count()
+                .exec(function (err,count){
+                    if(!count){
+                        sendJsonResponse(res, 200, {"count": 0});
+                        return;
+                    } else if (err) {
+                        sendJsonResponse(res, 404, err);
+                        return;
+                    }
+                    sendJsonResponse(res, 200, {"count": count});
+                });
+        });
+});
+
+// gives count on how many followers.
+// based on paramater username
 router.get("/users/follower/count/:username", function (req, res, next) {
     "use strict";
     User.findOne({username: req.params.username})
-        .select("count")
-        .exec(function (err, userCount){
-            if (err) {
-                return next(err);
+        .select("_id")
+        .exec(function (err,_id) {
+            if (!_id) {
+                sendJsonResponse(res, 404, {"message": "User not found."})
+                return;
+            } else if (err) {
+                sendJsonResponse(res, 404, err);
+                return;
             }
-            if (userCount === null) {
-                res.send(0);
-            } else {
-                res.send(userCount);
+            Follower.find({user_id: _id._id})
+                .count()
+                .exec(function (err, count){
+                    if (!count) {
+                        sendJsonResponse(res, 200, {"count": 0});
+                        return;
+                    } else if (err) {
+                        sendJsonResponse(res, 404, err);
+                        return;
+                    }
+                    sendJsonResponse(res, 200, {"count": count})
+                })
+        })
+});
+
+// current session user following another person.
+// requires autentication
+// based on paramater username for other user.
+router.post("/users/follow/:username", authenticate, function (req,res,next) {
+    "use strict";
+    User.findOne({username: req.params.username})
+        .select("_id")
+        .exec(function (err,_id) {
+            if (!_id) {
+                sendJsonResponse(res, 404, {"message": "User not found."});
+                return;
+            } else if (err) {
+                sendJsonResponse(res, 404, err);
+                return;
             }
+            var following = new Following({
+                user_id: req.session.user._id,
+                user: _id
+            });
+            var follower = new Follower({
+                user_id: _id,
+                user: req.session.user._id
+            });
+            following.save(function (err) {
+                if (err) {
+                    return next(err);
+                }
+                follower.save(function (err) {
+                    if (err) {
+                        return next(err);
+                    }
+                    sendJsonResponse(res,201,{
+                        "message": "User " + req.session.user.username + " is now following " + req.params.username
+                    });
+                });
+            });
+        });
+});
+
+router.get("/users/isFollowing/:username", function (req,res,next) {
+    "use strict";
+    User.findOne({"username": req.params.username})
+        .select("_id")
+        .exec(function (err,_id) {
+            if (!_id) {
+                sendJsonResponse(res, 404, {"message": "User not found."});
+                return;
+            } else if (err) {
+                sendJsonResponse(res, 404, err);
+                return;
+            }
+            Following.findOne({
+                "user_id": req.session.user._id,
+                "user": _id._id})
+                    .exec(function (err, following) {
+                        if (!following) {
+                            sendJsonResponse(res, 200, {"message": false});
+                            return;
+                        } else if (err) {
+                            sendJsonResponse(res, 400, err);
+                            return;
+                        }
+                        sendJsonResponse(res, 200, {"message": true});
+                    });
         });
 });
 
