@@ -7,13 +7,14 @@
                     <h2>{{user_content_userName}}</h2>
                     <p>User since {{user_content_dateSince}}</p>
                 </div>
-                <div class="col-md-offset-2 col-md-3">
-                    <p>Followers {{user_content_followers}}</p>
-                    <p>Following {{user_content_following}}</p>
-                    <p>Upvotes {{user_content_upvotes}}</p>
-                    <a href="">Follow</a>
-                    <a href="">Report</a>
-                    <a href="">Send Message</a>
+                <div class="col-md-3">
+                    <p>Followers: {{user_content_followers}}</p>
+                    <p>Following: {{user_content_following}}</p>
+                    <p>Upvotes: null</p>
+
+                </div>
+                <div class="col-md-2">
+                    <input id="user_content_input_follow" type="checkbox" />
                 </div>
             </div> <!-- end of user_content_row_userInfo -->
         </div> <!-- end of container -->
@@ -21,15 +22,69 @@
     <div class="row">
         <div class="col-md-12">
             <ul id="user_content_ul_pills" class="nav nav-pills">
-              <li id="user_content_li_member" ng-click="liClick('user_content_li_member')" role="presentation" class="active"><a href="">Member</a></li>
-              <li id="user_content_li_posts" ng-click="liClick('user_content_li_posts')" role="presentation"><a href="">Posts</a></li>
-              <li id="user_content_li_decks" ng-click="liClick('user_content_li_decks')" role="presentation"><a href="">Decks</a></li>
-              <li id="user_content_li_card" ng-click="liClick('user_content_li_card')" role="presentation"><a href="">Card Collection</a></li>
-              <li id="user_content_li_fav" ng-click="liClick('user_content_li_fav')" role="presentation"><a href="">Favorites</a></li>
-              <li id="user_content_li_thread" ng-click="liClick('user_content_li_thread')" role="presentation"><a href="">Threads</a></li>
-              <li id="user_content_li_followers" ng-click="liClick('user_content_li_followers')" role="presentation"><a href="">Followers</a></li>
-              <li id="user_content_li_message" ng-click="liClick('user_content_li_message')" role="presentation"><a href="">Message</a></li>
+              <li id="user_content_li_member" ng-click="liClick('member')" role="presentation" class="active"><a href="">Member</a></li>
+              <li id="user_content_li_posts" ng-click="liClick('posts')" role="presentation"><a href="">Posts</a></li>
+              <li id="user_content_li_decks" ng-click="liClick('decks')" role="presentation"><a href="">Decks</a></li>
+              <li id="user_content_li_card" ng-click="liClick('card')" role="presentation"><a href="">Card Collection</a></li>
+              <li id="user_content_li_fav" ng-click="liClick('fav')" role="presentation"><a href="">Favorites</a></li>
+              <li id="user_content_li_thread" ng-click="liClick('thread')" role="presentation"><a href="">Threads</a></li>
+              <li id="user_content_li_followers" ng-click="liClick('followers')" role="presentation"><a href="">Followers</a></li>
+              <li id="user_content_li_message" ng-click="liClick('message')" role="presentation"><a href="">Message</a></li>
+              <li id="user_content_li_preference" ng-click="liClick('preference')" role="presentation"><a href="">Preference</a></li>
             </ul>
+        </div>
+    </div>
+    <div class="col-md-8 col-md-offset-2" id="user_content_div_view">
+        <div id="user_content_div_member">
+            <p>
+                Lorizzle shizznit dolizzle sit amet, consectetuer adipiscing uhuh ... yih!. Nullam sapien velizzle, fizzle volutpizzle, suscipit quizzle, fo shizzle mah nizzle fo rizzle, mah home g-dizzle vizzle, arcu. Pellentesque funky fresh tortor. Sizzle erizzle. Fusce yo mamma dolor dapibus turpis tempus fo shizzle. Pot pellentesque hizzle izzle boom shackalack. Sheezy in ma nizzle. Pellentesque eleifend rhoncizzle nisi. In hizzle habitasse phat shit. Go to hizzle dapibizzle. Da bomb sure fo, pretium shizznit, you son of a bizzle shiznit, eleifend sheezy, nunc. Pizzle shizzlin dizzle. Shut the shizzle up semper velit sizzle pot.
+
+                Etizzle fizzle urna mofo nisl. Mah nizzle pot mah nizzle. Pot pulvinar, ipsum phat malesuada scelerisque, nulla purus euismod shiz, izzle luctus metizzle nulla izzle you son of a bizzle. Vivamizzle ullamcorper, boom shackalack izzle varizzle nizzle, dawg nunc ultricies turpizzle, izzle fo shizzle leo elit get down get down yo mamma. Shizzlin dizzle stuff, orci vel volutpat shit, sizzle gangsta luctizzle brizzle, for sure bibendum enim gangsta izzle nisl. Nullam things gangsta shit orci da bomb bow wow wow. Phasellus nizzle boom shackalack. Curabitizzle bling bling i'm in the shizzle black pede sheezy get down get down. Shiz tellivizzle nulla, iaculizzle the bizzle, molestie sizzle, egestas a, eros. Stuff vitae stuff boom shackalack nibh bibendum sheezy. Mofo pulvinizzle consectetuer sizzle. Aliquam erat volutpat. Nunc mah nizzle leo izzle stuff pretizzle fo shizzle. Mah nizzle brizzle lacizzle shizznit dui you son of a bizzle ultricizzle. Ut nisl. Mah nizzle izzle shizznit. Mammasay mammasa mamma oo sa laoreet ipsizzle in mi. Donizzle shit turpis.
+            </p>
+        </div>
+        <div id="user_content_div_posts" style="display:none">
+            <p>
+                Lorizzle shizznit dolizzle sit amet, consectetuer adipiscing uhuh ... yih!. Nullam sapien velizzle, fizzle volutpizzle, suscipit quizzle, fo shizzle mah nizzle fo rizzle, mah home g-dizzle vizzle, arcu. Pellentesque funky fresh tortor. Sizzle erizzle. Fusce yo mamma dolor dapibus turpis tempus fo shizzle. Pot pellentesque hizzle izzle boom shackalack. Sheezy in ma nizzle. Pellentesque eleifend rhoncizzle nisi. In hizzle habitasse phat shit. Go to hizzle dapibizzle. Da bomb sure fo, pretium shizznit, you son of a bizzle shiznit, eleifend sheezy, nunc. Pizzle shizzlin dizzle. Shut the shizzle up semper velit sizzle pot.
+                Lorizzle shizznit dolizzle sit amet, consectetuer adipiscing uhuh ... yih!. Nullam sapien velizzle, fizzle volutpizzle, suscipit quizzle, fo shizzle mah nizzle fo rizzle, mah home g-dizzle vizzle, arcu. Pellentesque funky fresh tortor. Sizzle erizzle. Fusce yo mamma dolor dapibus turpis tempus fo shizzle. Pot pellentesque hizzle izzle boom shackalack. Sheezy in ma nizzle. Pellentesque eleifend rhoncizzle nisi. In hizzle habitasse phat shit. Go to hizzle dapibizzle. Da bomb sure fo, pretium shizznit, you son of a bizzle shiznit, eleifend sheezy, nunc. Pizzle shizzlin dizzle. Shut the shizzle up semper velit sizzle pot.
+            </p>
+        </div>
+        <div id="user_content_div_decks" style="display:none">
+            <p>
+                Lorizzle shizznit dolizzle sit amet, consectetuer adipiscing uhuh ... yih!. Nullam sapien velizzle, fizzle volutpizzle, suscipit quizzle, fo shizzle mah nizzle fo rizzle, mah home g-dizzle vizzle, arcu. Pellentesque funky fresh tortor. Sizzle erizzle. Fusce yo mamma dolor dapibus turpis tempus fo shizzle. Pot pellentesque hizzle izzle boom shackalack. Sheezy in ma nizzle. Pellentesque eleifend rhoncizzle nisi. In hizzle habitasse phat shit. Go to hizzle dapibizzle. Da bomb sure fo, pretium shizznit, you son of a bizzle shiznit, eleifend sheezy, nunc. Pizzle shizzlin dizzle. Shut the shizzle up semper velit sizzle pot.
+            </p>
+        </div>
+        <div id="user_content_div_card" style="display:none">
+            <p>
+                Lorizzle shizznit dolizzle sit amet, consectetuer adipiscing uhuh ... yih!. Nullam sapien velizzle, fizzle volutpizzle, suscipit quizzle, fo shizzle mah nizzle fo rizzle, mah home g-dizzle vizzle, arcu. Pellentesque funky fresh tortor. Sizzle erizzle. Fusce yo mamma dolor dapibus turpis tempus fo shizzle. Pot pellentesque hizzle izzle boom shackalack. Sheezy in ma nizzle. Pellentesque eleifend rhoncizzle nisi. In hizzle habitasse phat shit. Go to hizzle dapibizzle. Da bomb sure fo, pretium shizznit, you son of a bizzle shiznit, eleifend sheezy, nunc. Pizzle shizzlin dizzle. Shut the shizzle up semper velit sizzle pot.
+                Lorizzle shizznit dolizzle sit amet, consectetuer adipiscing uhuh ... yih!. Nullam sapien velizzle, fizzle volutpizzle, suscipit quizzle, fo shizzle mah nizzle fo rizzle, mah home g-dizzle vizzle, arcu. Pellentesque funky fresh tortor. Sizzle erizzle. Fusce yo mamma dolor dapibus turpis tempus fo shizzle. Pot pellentesque hizzle izzle boom shackalack. Sheezy in ma nizzle. Pellentesque eleifend rhoncizzle nisi. In hizzle habitasse phat shit. Go to hizzle dapibizzle. Da bomb sure fo, pretium shizznit, you son of a bizzle shiznit, eleifend sheezy, nunc. Pizzle shizzlin dizzle. Shut the shizzle up semper velit sizzle pot.
+            </p>
+        </div>
+        <div id="user_content_div_fav" style="display:none">
+            <p>
+                Lorizzle shizznit dolizzle sit amet, consectetuer adipiscing uhuh ... yih!. Nullam sapien velizzle, fizzle volutpizzle, suscipit quizzle, fo shizzle mah nizzle fo rizzle, mah home g-dizzle vizzle, arcu. Pellentesque funky fresh tortor. Sizzle erizzle. Fusce yo mamma dolor dapibus turpis tempus fo shizzle. Pot pellentesque hizzle izzle boom shackalack. Sheezy in ma nizzle. Pellentesque eleifend rhoncizzle nisi. In hizzle habitasse phat shit. Go to hizzle dapibizzle. Da bomb sure fo, pretium shizznit, you son of a bizzle shiznit, eleifend sheezy, nunc. Pizzle shizzlin dizzle. Shut the shizzle up semper velit sizzle pot.
+            </p>
+        </div>
+        <div id="user_content_div_thread" style="display:none">
+            <p>
+                Lorizzle shizznit dolizzle sit amet, consectetuer adipiscing uhuh ... yih!. Nullam sapien velizzle, fizzle volutpizzle, suscipit quizzle, fo shizzle mah nizzle fo rizzle, mah home g-dizzle vizzle, arcu. Pellentesque funky fresh tortor. Sizzle erizzle. Fusce yo mamma dolor dapibus turpis tempus fo shizzle. Pot pellentesque hizzle izzle boom shackalack. Sheezy in ma nizzle. Pellentesque eleifend rhoncizzle nisi. In hizzle habitasse phat shit. Go to hizzle dapibizzle. Da bomb sure fo, pretium shizznit, you son of a bizzle shiznit, eleifend sheezy, nunc. Pizzle shizzlin dizzle. Shut the shizzle up semper velit sizzle pot.
+                Lorizzle shizznit dolizzle sit amet, consectetuer adipiscing uhuh ... yih!. Nullam sapien velizzle, fizzle volutpizzle, suscipit quizzle, fo shizzle mah nizzle fo rizzle, mah home g-dizzle vizzle, arcu. Pellentesque funky fresh tortor. Sizzle erizzle. Fusce yo mamma dolor dapibus turpis tempus fo shizzle. Pot pellentesque hizzle izzle boom shackalack. Sheezy in ma nizzle. Pellentesque eleifend rhoncizzle nisi. In hizzle habitasse phat shit. Go to hizzle dapibizzle. Da bomb sure fo, pretium shizznit, you son of a bizzle shiznit, eleifend sheezy, nunc. Pizzle shizzlin dizzle. Shut the shizzle up semper velit sizzle pot.
+            </p>
+        </div>
+        <div id="user_content_div_followers" style="display:none">
+            <p>
+                Lorizzle shizznit dolizzle sit amet, consectetuer adipiscing uhuh ... yih!. Nullam sapien velizzle, fizzle volutpizzle, suscipit quizzle, fo shizzle mah nizzle fo rizzle, mah home g-dizzle vizzle, arcu. Pellentesque funky fresh tortor. Sizzle erizzle. Fusce yo mamma dolor dapibus turpis tempus fo shizzle. Pot pellentesque hizzle izzle boom shackalack. Sheezy in ma nizzle. Pellentesque eleifend rhoncizzle nisi. In hizzle habitasse phat shit. Go to hizzle dapibizzle. Da bomb sure fo, pretium shizznit, you son of a bizzle shiznit, eleifend sheezy, nunc. Pizzle shizzlin dizzle. Shut the shizzle up semper velit sizzle pot.
+            </p>
+        </div>
+        <div id="user_content_div_message" style="display:none">
+            <p>
+                Lorizzle shizznit dolizzle sit amet, consectetuer adipiscing uhuh ... yih!. Nullam sapien velizzle, fizzle volutpizzle, suscipit quizzle, fo shizzle mah nizzle fo rizzle, mah home g-dizzle vizzle, arcu. Pellentesque funky fresh tortor. Sizzle erizzle. Fusce yo mamma dolor dapibus turpis tempus fo shizzle. Pot pellentesque hizzle izzle boom shackalack. Sheezy in ma nizzle. Pellentesque eleifend rhoncizzle nisi. In hizzle habitasse phat shit. Go to hizzle dapibizzle. Da bomb sure fo, pretium shizznit, you son of a bizzle shiznit, eleifend sheezy, nunc. Pizzle shizzlin dizzle. Shut the shizzle up semper velit sizzle pot.
+                Lorizzle shizznit dolizzle sit amet, consectetuer adipiscing uhuh ... yih!. Nullam sapien velizzle, fizzle volutpizzle, suscipit quizzle, fo shizzle mah nizzle fo rizzle, mah home g-dizzle vizzle, arcu. Pellentesque funky fresh tortor. Sizzle erizzle. Fusce yo mamma dolor dapibus turpis tempus fo shizzle. Pot pellentesque hizzle izzle boom shackalack. Sheezy in ma nizzle. Pellentesque eleifend rhoncizzle nisi. In hizzle habitasse phat shit. Go to hizzle dapibizzle. Da bomb sure fo, pretium shizznit, you son of a bizzle shiznit, eleifend sheezy, nunc. Pizzle shizzlin dizzle. Shut the shizzle up semper velit sizzle pot.
+            </p>
+        </div>
+        <div id="user_content_div_preference" style="display:none">
+            <p>
+                Lorizzle shizznit dolizzle sit amet, consectetuer adipiscing uhuh ... yih!. Nullam sapien velizzle, fizzle volutpizzle, suscipit quizzle, fo shizzle mah nizzle fo rizzle, mah home g-dizzle vizzle, arcu. Pellentesque funky fresh tortor. Sizzle erizzle. Fusce yo mamma dolor dapibus turpis tempus fo shizzle. Pot pellentesque hizzle izzle boom shackalack. Sheezy in ma nizzle. Pellentesque eleifend rhoncizzle nisi. In hizzle habitasse phat shit. Go to hizzle dapibizzle. Da bomb sure fo, pretium shizznit, you son of a bizzle shiznit, eleifend sheezy, nunc. Pizzle shizzlin dizzle. Shut the shizzle up semper velit sizzle pot.
+            </p>
         </div>
     </div>
 </div>

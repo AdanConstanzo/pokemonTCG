@@ -2,12 +2,12 @@ var express    = require('express');
 var mongoose = require('mongoose');
 var app = express();
 app.use(require('./controllers'));
-app.set('port', (process.env.PORT || 3030));
+app.set('port', (process.env.PORT || 3000));
 
 console.log(app.get('port'))
 var connection
 
-if(app.get('port')=== 3030){
+if(app.get('port')=== 3000){
 	connection = 'localhost:27017/gottatcg'
 	mongoose.connect(connection,function(){
 		console.log("mongoose is connected")

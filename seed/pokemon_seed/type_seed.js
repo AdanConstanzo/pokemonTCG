@@ -1,4 +1,4 @@
-var Type = require('../models/Types');
+var Type = require('../../models/Types');
 
 var mongoose = require("mongoose");
 

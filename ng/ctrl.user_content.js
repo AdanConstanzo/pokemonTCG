@@ -2,11 +2,10 @@
 // Can be accessed as /#/user-<userName>/
 app.controller("UserContentCtrl", function ($scope,$routeParams,UserSvc) {
     var user_content = {};
-    user_content.previouLi = "user_content_li_member";
+    user_content.previouLi = "member";
     user_content.username = $routeParams.username;
-    console.log(user_content.username);
+    user_content.nav_pill = {};
     UserSvc.getUserOpenInfo(user_content.username).then(function(res){
-        console.log(res);
         $scope.user_content_userName = res.username;
         $scope.user_content_dateSince = "Feburary 2015";
         $scope.user_content_profileImage = res.user_image;
@@ -25,11 +24,13 @@ app.controller("UserContentCtrl", function ($scope,$routeParams,UserSvc) {
     $scope.liClick = function (liId) {
         "use strict";
         if (liId !== user_content.previouLi) {
-            var previouLi = document.getElementById(user_content.previouLi);
-            previouLi.className = "";
-            var currentLid = document.getElementById(liId);
-            currentLid.className = "active";
+            document.getElementById("user_content_li_" + user_content.previouLi).className = "";
+            document.getElementById("user_content_div_" + user_content.previouLi).style.display = "none";
+            document.getElementById("user_content_li_" + liId).className = "active";
+            document.getElementById("user_content_div_" + liId).style.display = "block";
             user_content.previouLi = liId;
         }
     }
+
+
 });

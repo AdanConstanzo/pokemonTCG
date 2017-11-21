@@ -1,4 +1,4 @@
-var Sets = require('../models/Sets');
+var Sets = require('../../models/Sets');
 
 var mongoose = require("mongoose");
 

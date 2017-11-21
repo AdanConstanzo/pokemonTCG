@@ -1,4 +1,4 @@
-var Gif = require('../models/Gifs');
+var Gif = require('../../models/Gifs');
 
 var mongoose = require("mongoose");
 

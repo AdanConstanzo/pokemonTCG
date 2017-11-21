@@ -1,4 +1,4 @@
-var Silhouette = require('../models/Silhouette');
+var Silhouette = require('../../models/Silhouette');
 const mongoose = require("mongoose");
 const fs = require('fs');
 mongoose.connect('localhost:27017/gottatcg');
