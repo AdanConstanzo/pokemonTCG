@@ -121,7 +121,7 @@ angular.module('app').service('UserSvc', function ($http,$q) {
         "use strict";
         return $http.get("/api/users/user")
             .then(function (response) {
-                return response.data;
+                return response;
         });
     };
 
@@ -132,6 +132,13 @@ angular.module('app').service('UserSvc', function ($http,$q) {
             .then(function (response) {
                 return response.data;
             });
+    }
+
+    svc.returnSessionUserID = function() {
+        return $http.get("/api/users/session/id/")
+            .then(function (_id){
+                return _id.data;
+            })
     }
 
     /*

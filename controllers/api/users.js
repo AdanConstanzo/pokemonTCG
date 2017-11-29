@@ -143,6 +143,10 @@ router.get("/users/session", function (req, res, next) {
     }
 });
 
+router.get("/users/session/id/", function(req, res, next) {
+    res.send(req.session.user._id);
+});
+
 // Connects to logout from UserSvc service.
 // Destroys all sessions
 // Session:ALL , OUT: status 200

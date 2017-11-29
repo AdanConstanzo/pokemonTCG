@@ -1,4 +1,4 @@
-angular.module("app").controller("ApplicationCtrl", function ($scope, UserSvc, $location) {
+angular.module("app").controller("ApplicationCtrl", function ($scope, UserSvc, $location, $rootScope) {
 
     $scope.logout = function(){
         "use strict";
@@ -16,6 +16,10 @@ angular.module("app").controller("ApplicationCtrl", function ($scope, UserSvc, $
             "use strict";
             if (response) {
                 $scope.currentUser = response;
+                UserSvc.returnSessionUserID()
+                    .then(function (response) {
+                        $rootScope.user_id = response;
+                    });
             }
         });
 

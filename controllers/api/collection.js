@@ -1,35 +1,27 @@
 var router = require("express").Router();
-var Collection = require("../../models/Collection");
+var Collection = require("../../models/Collection"),
+    ObjectID = require('mongodb').ObjectID;
 
 function authenticate(req, res, next) {
     "use strict";
     if (req.session.user) {
-        return next();
+        if (req.session.user._id === req.body.user_id) {
+            return next();
+        } else {
+            return res.sendStatus(401);
+        }
     }
     return res.sendStatus(401);
 }
 
-//returns all collection of user
-router.get("/collection/", authenticate, function (req, res, next) {
+router.post("/collection/addCard/", authenticate, function(req,res,next) {
     "use strict";
-    Collection.find({username: req.session.user.username})
-        .exec(function (err, collection) {
-            if (err) {
-                return next(err);
-            }
-            res.send(collection);
-        });
-});
-
-// creates a new user based on all user info.
-router.post("/collection/", authenticate, function (req, res, next) {
-    "use strict";
-    var collection = new Collection({
-        username: req.session.user.username,
-        cardId: req.body.cardId,
-        quantity: req.body.value
+    var col = new Collection({
+        user_id: new ObjectID(req.body.user_id),
+        card_id: new ObjectID(req.body.card_id),
+        quantity: req.body.quantity
     });
-    collection.save(function (err) {
+    col.save(function (err) {
         if (err) {
             return next(err);
         }
@@ -37,44 +29,60 @@ router.post("/collection/", authenticate, function (req, res, next) {
     });
 });
 
-// gets quantity from users collection card.
-router.get("/collection/quantity/:cardId", authenticate, function (req, res, next) {
+router.put("/collection/updateQuantity/", authenticate, function(req,res,next) {
     "use strict";
-    Collection.find({username: req.session.user.username, cardId: req.params.cardId})
-        .exec(function (err, collection) {
+    var collectionId = new ObjectID(req.body.collection_id);
+    if(req.body.quantity == 0) {
+        Collection.remove({_id: collectionId}, function (err) {
             if (err) {
                 return next(err);
             }
-            res.send(collection);
+            res.sendStatus(200);return;
         });
-});
-
-router.put("/collection/", authenticate, function (req, res, next) {
-    "use strict";
-    Collection.update({
-        username: req.session.user.username,
-        cardId: req.body.cardId
-    }, {
-        quantity: req.body.value
-    })
-        .exec(function (err, collection) {
-            if (err) {
+    } else if (req.body.quantity > 0) {
+        Collection.findByIdAndUpdate({_id: collectionId},{quantity: req.body.quantity},function(err,docs){
+            if(err) {
                 return next(err);
             }
             res.sendStatus(201);
+            return;
         });
+    }
 });
 
-router.delete("/collection/:cardId", authenticate, function (req, res, next) {
+router.get("/collection/getAll/:userId", function(req, res, next) {
     "use strict";
-    Collection.remove({
-        username: req.session.user.username,
-        cardId: req.params.cardId
-    }, function (err) {
-        if (err) {
-            return next(err);
+    var userId = new ObjectID(req.params.userId);
+    //TODO: Wrap a try/catch for userId in creation of ObjectID
+    Collection.aggregate([
+        {
+            $match:{user_id:userId}
+        },
+        {
+            $lookup:
+            {
+                from: "cards",
+                localField:"card_id",
+                foreignField: "_id",
+                as: "Card"
+            }
+        },
+        {
+            $addFields: {
+                  "Card.quantity": "$quantity"
+               }
+        },
+        {
+            $project:{
+                Card:{ "$arrayElemAt": [ "$Card", 0 ] }
+            }
         }
-        res.sendStatus(201);
+    ],function(err,collectionList){
+        if (collectionList.length > 0) {
+            res.send(collectionList);
+        } else {
+            res.json({"status": "empty set"})
+        }
     });
 });
 

@@ -11,8 +11,7 @@ var schema = new Schema({
     following_count: {type: Number, required: true},
 	followers_count: {type: Number, required: true},
     user_image: {type:String,required: true},
-    user_banner: {type:Schema.Types.Object, required: true},
-	user_collection: [{type: Schema.Types.Object}]
+    user_banner: {type:Schema.Types.Object, required: true}
 });
 
 module.exports = mongoose.model('User',schema);

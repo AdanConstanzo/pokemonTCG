@@ -1,20 +1,17 @@
-angular.module("app").controller("CardManagerCtrl", function ($scope, $location, $location, UserSvc, CollectionSvc, GetCardSvc) {
+angular.module("app").controller("CardManagerCtrl", function ($scope, $location, $location, $rootScope, UserSvc, CollectionSvc, GetCardSvc) {
 
     // handles if user is connected
-    UserSvc.checkUserSession();
-
-    CollectionSvc.getUserCollection()
-        .then(function (collection) {
-            "use strict";
-            collection.forEach(function (call) {
-                GetCardSvc.getOne(call.cardId)
-                    .then(function (card) {
-                        card.quantity = call.quantity;
-                        $scope.collImageSource.push(card);
+    UserSvc.checkUserSession()
+        .then(function(response){
+            if($rootScope.user_id) {
+                CollectionSvc.getCollection($rootScope.user_id)
+                    .then(function (collection) {
+                        "use strict";
+                        $scope.collImageSource = collection;
                     });
-            });
+            }
         });
-        
+
 //======= Variables ========/
   $scope.collImageSource = [];
   var collectionHandler = {}
