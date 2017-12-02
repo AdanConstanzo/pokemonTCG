@@ -9,4 +9,19 @@ angular.module("app").service("CollectionSvc", function ($http) {
             });
     }
 
+    // takes in collection id.
+    svc.removeCollection = function(collectionID){
+        return $http.delete("/api/collection/deleteSingle/" + collectionID)
+            .then(function(response){
+                return response.data;
+            });
+    }
+
+    svc.updateCollection = function(collection_id,quantity){
+        return $http.put("/api/collection/updateQuantity/"+collection_id+"/"+quantity)
+            .then(function(collection){
+                return collection.data;
+            });
+    }
+
 })

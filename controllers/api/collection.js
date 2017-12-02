@@ -5,11 +5,7 @@ var Collection = require("../../models/Collection"),
 function authenticate(req, res, next) {
     "use strict";
     if (req.session.user) {
-        if (req.session.user._id === req.body.user_id) {
-            return next();
-        } else {
-            return res.sendStatus(401);
-        }
+        return next();
     }
     return res.sendStatus(401);
 }
@@ -29,25 +25,16 @@ router.post("/collection/addCard/", authenticate, function(req,res,next) {
     });
 });
 
-router.put("/collection/updateQuantity/", authenticate, function(req,res,next) {
+router.put("/collection/updateQuantity/:collection_id/:quantity", authenticate, function(req,res,next) {
     "use strict";
-    var collectionId = new ObjectID(req.body.collection_id);
-    if(req.body.quantity == 0) {
-        Collection.remove({_id: collectionId}, function (err) {
-            if (err) {
-                return next(err);
-            }
-            res.sendStatus(200);return;
-        });
-    } else if (req.body.quantity > 0) {
-        Collection.findByIdAndUpdate({_id: collectionId},{quantity: req.body.quantity},function(err,docs){
-            if(err) {
-                return next(err);
-            }
-            res.sendStatus(201);
-            return;
-        });
-    }
+    var collectionId = new ObjectID(req.params.collection_id);
+    Collection.findByIdAndUpdate({_id: collectionId},{quantity: req.params.quantity},function(err,docs){
+        if(err) {
+            return next(err);
+        }
+        res.sendStatus(201);
+        return;
+    });
 });
 
 router.get("/collection/getAll/:userId", function(req, res, next) {
@@ -85,5 +72,14 @@ router.get("/collection/getAll/:userId", function(req, res, next) {
         }
     });
 });
+
+router.delete("/collection/deleteSingle/:collection_id", function(req, res, next) {
+    "use strict";
+    var collectionObjectId = new ObjectID(req.params.collection_id);
+    Collection.remove({"_id":collectionObjectId})
+        .exec(function(err,doc){
+            res.sendStatus(200);
+        });
+})
 
 module.exports = router;
