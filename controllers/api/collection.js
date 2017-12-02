@@ -73,6 +73,16 @@ router.get("/collection/getAll/:userId", function(req, res, next) {
     });
 });
 
+router.get("/collection/getSignleCount/:card_id", authenticate, function(req, res, next){
+    Collection.findOne({"user_id": req.session.user._id, "card_id": req.params.card_id},{quantity: 1})
+        .exec(function(err,quant){
+            if (err) {
+                return next(err);
+            }
+            res.send(quant);
+        });
+});
+
 router.delete("/collection/deleteSingle/:collection_id", function(req, res, next) {
     "use strict";
     var collectionObjectId = new ObjectID(req.params.collection_id);

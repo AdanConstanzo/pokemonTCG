@@ -1,12 +1,11 @@
 angular.module('app').controller('CardsCtrl', function ($scope,$location,$compile,GetCardSvc,UserSvc,SetSvc,CollectionSvc) {
 
     SetSvc.getAllSets()
-    .then(function(response)
-    {
-      console.log(response);
-        $scope.PokemonSet = response
-        $scope.set(response[0])
-    })
+        .then(function (response) {
+            console.log(response);
+            $scope.PokemonSet = response;
+            $scope.set(response[0]);
+    });
 
     UserSvc.returnSessionUserName()
         .then(function (response) {
@@ -60,8 +59,8 @@ angular.module('app').controller('CardsCtrl', function ($scope,$location,$compil
 //========= ./Simple Function ==========//
 
 //================   User Input Function ================//
-    $scope.cardClick = function(cardObject)
-    {
+    $scope.cardClick = function (cardObject) {
+        console.log(cardObject);
         ctrlCardsObject.currentCardObject = cardObject
         ctrlCardsObject.currentCardId = cardObject.id
 
@@ -71,14 +70,13 @@ angular.module('app').controller('CardsCtrl', function ($scope,$location,$compil
         document.getElementById("nonMember-"+ctrlCardsObject.currentCardId).style.display = "none"
         document.getElementById("member-"+ctrlCardsObject.currentCardId).style.display = "none"
 
-        CollectionSvc.getQuantityOfCardFromCollection(ctrlCardsObject.currentCardId)
-        .then(function(response)
-        {
-            document.getElementById("member-"+ctrlCardsObject.currentCardId).style.display = ""
-            ctrlCardsObject.startingValue = ctrlCardsObject.finishedValue = parseInt(response) || 0
-            ctrlCardsObject.cardInput = document.getElementById("card-quantity-"+ctrlCardsObject.currentCardId)
-            ctrlCardsObject.cardInput.setAttribute("value",ctrlCardsObject.startingValue)
-        })
+        CollectionSvc.getSingleQuantity(cardObject._id)
+            .then(function (response) {
+                document.getElementById("member-"+ctrlCardsObject.currentCardId).style.display = "";
+                ctrlCardsObject.startingValue = ctrlCardsObject.finishedValue = parseInt(response) || 0;
+                ctrlCardsObject.cardInput = document.getElementById("card-quantity-"+ctrlCardsObject.currentCardId);
+                ctrlCardsObject.cardInput.setAttribute("value",ctrlCardsObject.startingValue);
+        });
 
     }
     $scope.handleQuantity = function(theCase)

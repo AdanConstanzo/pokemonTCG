@@ -24,4 +24,15 @@ angular.module("app").service("CollectionSvc", function ($http) {
             });
     }
 
+    svc.getSingleQuantity = function(card_id) {
+        return $http.get("/api/collection/getSignleCount/" + card_id)
+            .then(function (quant){
+                if (quant.data === "") {
+                    return null;
+                } else {
+                    return quant.data.quantity;
+                }
+            });
+    }
+
 })
