@@ -2,7 +2,6 @@ angular.module('app').controller('CardsCtrl', function ($scope,$location,$compil
 
     SetSvc.getAllSets()
         .then(function (response) {
-            console.log(response);
             $scope.PokemonSet = response;
             $scope.set(response[0]);
     });
@@ -17,53 +16,49 @@ angular.module('app').controller('CardsCtrl', function ($scope,$location,$compil
 
     $(window).on('hide.bs.modal', function() {
 
-        if($location.path() === "/cards"){
-            if(ctrlCardsObject.finishedValue == ctrlCardsObject.startingValue)
-                return
-            else if (ctrlCardsObject.finishedValue == 0)
-                return CollectionSvc.removeCollection(ctrlCardsObject.currentCardObject)
-            else if (ctrlCardsObject.startingValue == 0 )
-                return CollectionSvc.postCollection(ctrlCardsObject.currentCardObject,ctrlCardsObject.finishedValue)
-            else
-                return CollectionSvc.updateCollection(ctrlCardsObject.currentCardObject,ctrlCardsObject.finishedValue)
+        if ($location.path() === "/cards") {
+            if(ctrlCardsObject.finishedValue == ctrlCardsObject.startingValue) {
+                return;
+            } else if (ctrlCardsObject.finishedValue == 0) {
+                return CollectionSvc.removeCollection(ctrlCardsObject.collection_db_id);
+            } else if (ctrlCardsObject.startingValue == 0 ) {
+                return CollectionSvc.postCollection({card_id: ctrlCardsObject.card_db_id, quantity: ctrlCardsObject.finishedValue});
+            } else {
+                return CollectionSvc.updateCollection({collection_id: ctrlCardsObject.collection_db_id, quantity: ctrlCardsObject.finishedValue});
+            }
         }
 
-    })
+    });
 //============== ./Modal Event Listeners ================//
 
 //=========   Simple Function ==========//
 
-    function changeSetName(set)
-    {
-        ctrlCardsObject.getTarget.innerHTML = set + ctrlCardsObject.caret
+    function changeSetName (set){
+        ctrlCardsObject.getTarget.innerHTML = set + ctrlCardsObject.caret;
     }
-    function changeSearchBar()
-    {
-        ctrlCardsObject.searchButton.className = "glyphicon glyphicon-remove"
-        ctrlCardsObject.isSearch = true
+    function changeSearchBar () {
+        ctrlCardsObject.searchButton.className = "glyphicon glyphicon-remove";
+        ctrlCardsObject.isSearch = true;
     }
-    function clearSearch()
-    {
-        $scope.PokemonSearch = ""
-        ctrlCardsObject.searchButton.className = "glyphicon glyphicon-search"
-        document.getElementById('imageSourceCarousel').style.display = ""
-        document.getElementById('searchSourceCarousel').style.display = "none"
-        ctrlCardsObject.isSearch = false
-        changeSetName(ctrlCardsObject.lastSet)
+    function clearSearch () {
+        $scope.PokemonSearch = "";
+        ctrlCardsObject.searchButton.className = "glyphicon glyphicon-search";
+        document.getElementById('imageSourceCarousel').style.display = "";
+        document.getElementById('searchSourceCarousel').style.display = "none";
+        ctrlCardsObject.isSearch = false;
+        changeSetName(ctrlCardsObject.lastSet);
     }
-    function authenError(currentCardId)
-    {
-        document.getElementById("member-"+currentCardId).style.display = "none"
-        document.getElementById("nonMember-"+currentCardId).style.display = ""
+    function authenError (currentCardId) {
+        document.getElementById("member-"+currentCardId).style.display = "none";
+        document.getElementById("nonMember-"+currentCardId).style.display = "";
     }
 //========= ./Simple Function ==========//
 
 //================   User Input Function ================//
     $scope.cardClick = function (cardObject) {
-        console.log(cardObject);
         ctrlCardsObject.currentCardObject = cardObject
         ctrlCardsObject.currentCardId = cardObject.id
-
+        ctrlCardsObject.card_db_id = cardObject._id;
         if(!$scope.loggedIn)
             return authenError(ctrlCardsObject.currentCardId)
 
@@ -72,38 +67,36 @@ angular.module('app').controller('CardsCtrl', function ($scope,$location,$compil
 
         CollectionSvc.getSingleQuantity(cardObject._id)
             .then(function (response) {
+                if(response !== null){
+                    ctrlCardsObject.collection_db_id = response._id;
+                    ctrlCardsObject.startingValue = ctrlCardsObject.finishedValue = parseInt(response.quantity) || 0;                    
+                } else {
+                    ctrlCardsObject.collection_db_id = "";
+                    ctrlCardsObject.startingValue = ctrlCardsObject.finishedValue = 0;   
+                }
                 document.getElementById("member-"+ctrlCardsObject.currentCardId).style.display = "";
-                ctrlCardsObject.startingValue = ctrlCardsObject.finishedValue = parseInt(response) || 0;
                 ctrlCardsObject.cardInput = document.getElementById("card-quantity-"+ctrlCardsObject.currentCardId);
                 ctrlCardsObject.cardInput.setAttribute("value",ctrlCardsObject.startingValue);
         });
 
     }
-    $scope.handleQuantity = function(theCase)
-    {
-        if(theCase === 0)
-        {
-            ctrlCardsObject.finishedValue --
-            if(ctrlCardsObject.finishedValue <= 0)
-            {
-                ctrlCardsObject.cardInput.value = 0
-                return ctrlCardsObject.finishedValue = 0
+    $scope.handleQuantity = function (theCase) {
+        if(theCase === 0) {
+            ctrlCardsObject.finishedValue --;
+            if (ctrlCardsObject.finishedValue <= 0) {
+                ctrlCardsObject.cardInput.value = 0;
+                return ctrlCardsObject.finishedValue = 0;
             }
-            ctrlCardsObject.cardInput.value = ctrlCardsObject.finishedValue
-        }
-        else if( theCase === 1)
-        {
-            ctrlCardsObject.finishedValue++
-            if(ctrlCardsObject.finishedValue<0)
-            {
-                ctrlCardsObject.cardInput.value = 0
-                return ctrlCardsObject.finishedValue = 0
+            ctrlCardsObject.cardInput.value = ctrlCardsObject.finishedValue;
+        } else if (theCase === 1) {
+            ctrlCardsObject.finishedValue++;
+            if (ctrlCardsObject.finishedValue<0) {
+                ctrlCardsObject.cardInput.value = 0;
+                return ctrlCardsObject.finishedValue = 0;
             }
-            ctrlCardsObject.cardInput.value = ctrlCardsObject.finishedValue
-
+            ctrlCardsObject.cardInput.value = ctrlCardsObject.finishedValue;
         }
-
-        ctrlCardsObject.finishedValue = ctrlCardsObject.cardInput.value
+        ctrlCardsObject.finishedValue = ctrlCardsObject.cardInput.value;
     }
 
     $scope.searchCard = function()
@@ -167,6 +160,10 @@ angular.module('app').controller('CardsCtrl', function ($scope,$location,$compil
     ctrlCardsObject.lastSet = ""
     //
     ctrlCardsObject.cardInput = {}
+
+    ctrlCardsObject.card_db_id = "";
+
+    ctrlCardsObject.collection_db_id = "";
 //========== ./Variables  ===========//
 
 

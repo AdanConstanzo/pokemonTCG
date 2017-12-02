@@ -85,7 +85,7 @@ angular.module("app").controller("CardManagerCtrl", function ($scope, $location,
 			} else if (collectionHandler.collFinalValue === 0) {
 				return removeCard()
 			}else {
-				return CollectionSvc.updateCollection(collectionHandler.CollectionCardID,collectionHandler.collFinalValue)
+				return CollectionSvc.updateCollection({collection_id: collectionHandler.CollectionCardID,quantity: collectionHandler.collFinalValue});
 			}
 		}
 

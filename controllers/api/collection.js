@@ -13,7 +13,7 @@ function authenticate(req, res, next) {
 router.post("/collection/addCard/", authenticate, function(req,res,next) {
     "use strict";
     var col = new Collection({
-        user_id: new ObjectID(req.body.user_id),
+        user_id: new ObjectID(req.session.user._id),
         card_id: new ObjectID(req.body.card_id),
         quantity: req.body.quantity
     });
@@ -25,10 +25,10 @@ router.post("/collection/addCard/", authenticate, function(req,res,next) {
     });
 });
 
-router.put("/collection/updateQuantity/:collection_id/:quantity", authenticate, function(req,res,next) {
+router.put("/collection/updateQuantity/", authenticate, function(req,res,next) {
     "use strict";
-    var collectionId = new ObjectID(req.params.collection_id);
-    Collection.findByIdAndUpdate({_id: collectionId},{quantity: req.params.quantity},function(err,docs){
+    var collectionId = new ObjectID(req.body.collection_id);
+    Collection.findByIdAndUpdate({_id: collectionId},{quantity: req.body.quantity},function(err,docs){
         if(err) {
             return next(err);
         }
@@ -83,7 +83,7 @@ router.get("/collection/getSignleCount/:card_id", authenticate, function(req, re
         });
 });
 
-router.delete("/collection/deleteSingle/:collection_id", function(req, res, next) {
+router.delete("/collection/deleteSingle/:collection_id", authenticate, function(req, res, next) {
     "use strict";
     var collectionObjectId = new ObjectID(req.params.collection_id);
     Collection.remove({"_id":collectionObjectId})

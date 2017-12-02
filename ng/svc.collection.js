@@ -17,8 +17,8 @@ angular.module("app").service("CollectionSvc", function ($http) {
             });
     }
 
-    svc.updateCollection = function(collection_id,quantity){
-        return $http.put("/api/collection/updateQuantity/"+collection_id+"/"+quantity)
+    svc.updateCollection = function(collectionObjject){
+        return $http.put("/api/collection/updateQuantity/", collectionObjject)
             .then(function(collection){
                 return collection.data;
             });
@@ -30,9 +30,16 @@ angular.module("app").service("CollectionSvc", function ($http) {
                 if (quant.data === "") {
                     return null;
                 } else {
-                    return quant.data.quantity;
+                    return quant.data;
                 }
             });
+    }
+
+    svc.postCollection = function(collectionObject) {
+        return $http.post("/api/collection/addCard/", collectionObject)
+            .then(function (response) {
+                return response;
+            })
     }
 
 })
