@@ -15,12 +15,7 @@ router.use(function (req, res, next) {
     next();
 });
 
-router.get("/", function (req, res) {
-    "use strict";
-    res.render("index.html.ejs");
-});
 
 router.use("/api", require("./api"));
-router.use("/", require("./static"));
 
 module.exports = router;
