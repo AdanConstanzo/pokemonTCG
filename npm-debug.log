@@ -1,0 +1,45 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'start', 'dev' ]
+2 info using npm@3.10.10
+3 info using node@v6.11.4
+4 verbose run-script [ 'prestart', 'start', 'poststart' ]
+5 info lifecycle gottatcg@1.1.0~prestart: gottatcg@1.1.0
+6 silly lifecycle gottatcg@1.1.0~prestart: no script for prestart, continuing
+7 info lifecycle gottatcg@1.1.0~start: gottatcg@1.1.0
+8 verbose lifecycle gottatcg@1.1.0~start: unsafe-perm in lifecycle true
+9 verbose lifecycle gottatcg@1.1.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/home/adan/Projects/pokemonTCG/node_modules/.bin:/home/adan/bin:/home/adan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/:/home/adan/eclipse_oxy/eclipse:/usr/lib/Postman:/usr/share/mongodb-linux-x86_64-ubuntu1604-3.4.10/bin/
+10 verbose lifecycle gottatcg@1.1.0~start: CWD: /home/adan/Projects/pokemonTCG
+11 silly lifecycle gottatcg@1.1.0~start: Args: [ '-c', 'node server.js "dev"' ]
+12 silly lifecycle gottatcg@1.1.0~start: Returned: code: 1  signal: null
+13 info lifecycle gottatcg@1.1.0~start: Failed to exec start script
+14 verbose stack Error: gottatcg@1.1.0 start: `node server.js "dev"`
+14 verbose stack Exit status 1
+14 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at EventEmitter.emit (events.js:191:7)
+14 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:40:14)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at ChildProcess.emit (events.js:191:7)
+14 verbose stack     at maybeClose (internal/child_process.js:920:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:230:5)
+15 verbose pkgid gottatcg@1.1.0
+16 verbose cwd /home/adan/Projects/pokemonTCG
+17 error Linux 4.10.0-38-generic
+18 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "start" "dev"
+19 error node v6.11.4
+20 error npm  v3.10.10
+21 error code ELIFECYCLE
+22 error gottatcg@1.1.0 start: `node server.js "dev"`
+22 error Exit status 1
+23 error Failed at the gottatcg@1.1.0 start script 'node server.js "dev"'.
+23 error Make sure you have the latest version of node.js and npm installed.
+23 error If you do, this is most likely a problem with the gottatcg package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     node server.js "dev"
+23 error You can get information on how to open an issue for this project with:
+23 error     npm bugs gottatcg
+23 error Or if that isn't available, you can get their info via:
+23 error     npm owner ls gottatcg
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]
