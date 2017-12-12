@@ -17,5 +17,6 @@ router.use(function (req, res, next) {
 
 
 router.use("/api", require("./api"));
+router.use("/", require("./static"));
 
 module.exports = router;

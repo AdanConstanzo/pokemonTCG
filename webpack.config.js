@@ -6,6 +6,14 @@ module.exports = {
   context: path.join(__dirname, "src"),
   devtool: debug ? "inline-sourcemap" : false,
   entry: "./js/client.js",
+  devServer: {
+    inline: true,
+    port: 3000,
+    contentBase: "static/",
+    historyApiFallback: {
+      index: '/index-static.html'
+    }
+  },
   module: {
     loaders: [
       {
